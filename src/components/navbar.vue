@@ -74,9 +74,9 @@
                 <!--导航栏末尾-->
                 <div class="navbar-item" v-if="!this.$store.state.isLogin">
                     <div class="buttons">
-                        <a href="" class="button is-primary">
+                        <router-link to="/sign" class="button is-primary">
                             <strong>注册</strong>
-                        </a>
+                        </router-link>
                         <a href="" class="button is-light">
                             登陆
                         </a>
