@@ -9,7 +9,7 @@ export default new Vuex.Store({
     messageCount: 100,
     token: "",
     userRole: "admin",
-    usename:"chengxiaoxiao"
+    usename: "chengxiaoxiao"
   },
   mutations: {
     changeLogin(state) {
@@ -24,8 +24,8 @@ export default new Vuex.Store({
     setRole(state, data) {
       state.userRole = data;
     },
-    setUsername(state,data){
-      state.usename=data
+    setUsername(state, data) {
+      state.usename = data;
     }
   },
   actions: {}

@@ -77,9 +77,9 @@
                         <router-link to="/sign" class="button is-primary">
                             <strong>注册</strong>
                         </router-link>
-                        <a href="" class="button is-light">
+                        <router-link to='/login' class="button is-light">
                             登陆
-                        </a>
+                        </router-link>
                     </div>
                 </div>
                 <div role="message buttom" class="navbar-item" v-if="this.$store.state.isLogin" >

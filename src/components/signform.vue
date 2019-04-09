@@ -1,11 +1,11 @@
 <template>
     <div role="sign form" >
-        <el-form :model="signForm" status-icon :rules="rules" ref="signForm" label-width="100px" class="demo-ruleForm ">
+        <el-form :model="signForm" status-icon :rules="rules" ref="signForm" label-width="100px" >
             <el-form-item label="用户名" prop="username">
                 <el-input type="string" v-model="signForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-                <el-input v-model.number="signForm.email" type="email"></el-input>
+                <el-input v-model="signForm.email" type="email" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
                 <el-input type="password" v-model="signForm.pass" autocomplete="off"></el-input>
@@ -15,7 +15,7 @@
             </el-form-item>
             
             <el-form-item>
-                <el-button type="primary" @click="submitForm('signForm')">提交</el-button>
+                <el-button type="primary" @click="submitForm('signForm')">注册</el-button>
                 <el-button @click="resetForm('signForm')">重置</el-button>
             </el-form-item>
         </el-form>
@@ -52,7 +52,7 @@ export default {
             })
         };
         var validateEmail=(rule,value,callback)=>{
-            if (value===''){
+            if (!value){
                 callback(new Error('请输入邮箱'));
             }
             var email_rex=/[^@]+@[^@]+\.[^@]+/
@@ -161,17 +161,17 @@ export default {
         showSucceedMess(username) {
             this.$message({
                 showClose: true,
-                message: username+' ，注册成功!',
+                message: username+' ，注册成功,请检查邮箱确认账户!',
                 type: 'success'
             });
-       },
-       showFailedMess() {
-        this.$message({
-          showClose: true,
-          message: '注册失败, 请重试!',
-          type: 'error'
-        });
-      }
+        },
+        showFailedMess() {
+            this.$message({
+                 howClose: true,
+                message: '注册失败, 请重试!',
+                type: 'error'
+            });
+        } 
     }
 }
 </script>
