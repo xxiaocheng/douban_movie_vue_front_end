@@ -5,24 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLogin: false,
-    messageCount: 100,
-    token: "",
-    userRole: "admin",
-    usename: "chengxiaoxiao"
+    isLogin: localStorage.getItem("isLogin") || false,
+    token: localStorage.getItem("token") || "",
+    usename: {}
   },
   mutations: {
-    changeLogin(state) {
-      state.isLogin = !state.isLogin;
+    changeLogin(state, flag) {
+      state.isLogin = flag;
     },
     changeMessageCount(state, data) {
       state.messageCount = data;
-    },
-    setToken(state, data) {
-      state.token = data;
-    },
-    setRole(state, data) {
-      state.userRole = data;
     },
     setUsername(state, data) {
       state.usename = data;

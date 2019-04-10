@@ -104,7 +104,7 @@
                         账号管理
                         </a>
                         <hr class="navbar-divider">
-                        <a href="/logout" class="navbar-item">
+                        <a  class="navbar-item" v-on:click="logout">
                         注销登录
                         </a>
                     </div>
@@ -131,9 +131,6 @@ export default {
         toggleNav:function(){
             this.isToggleNav=!this.isToggleNav
         },
-        changeLogin:function(){
-            this.$store.commit('changeLogin')
-        },
         querySearchAsync(queryString,cb){
             this.$http
             .get('/search',{
@@ -155,6 +152,12 @@ export default {
         },
         handleSelect(item){
             console.log(item.movieId)
+        },
+        logout(){
+            localStorage.removeItem('isLogin');
+            localStorage.removeItem('token');
+            this.$router.push('/')
+            this.$store.commit('changeLogin',false)
         }
     }
     

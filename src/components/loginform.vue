@@ -96,12 +96,14 @@ export default {
                 params
             )
             .then(response=>{
-                console.log(response.data.access_token);
+                localStorage.setItem('token',response.data.access_token);
+                localStorage.setItem('isLogin','true');
                 this.showSucceedMess(this.loginForm.username);
+                this.$store.commit("changeLogin", true);
+                this.$router.push("/home")
             })
             .catch(error=>{
-                console.log('error');
-                this.showFailedMess();
+                this.showFailedMess(error.response.data.message);
             })
 
         },
@@ -112,10 +114,10 @@ export default {
                 type: 'success'
             });
         },
-        showFailedMess() {
+        showFailedMess(message) {
             this.$message({
                  howClose: true,
-                message: '登陆失败, 请重试!',
+                message: message,
                 type: 'error'
             });
         } 
