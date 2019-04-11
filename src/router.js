@@ -5,6 +5,10 @@ import NotFound from "./views/404.vue";
 import Sign from "./views/Sign.vue";
 import Login from "./views/Login.vue";
 import Movie from "./views/Movie.vue";
+import ResentConfirmEmail from "./views/ResentConfirmEmail.vue";
+import ConfirmEmail from "./views/ConfirmEmail.vue";
+import SentResetPasswordEmail from "./views/SentResetPasswordEmail.vue";
+import ResetPassword from "./views/ResetPassword.vue";
 
 Vue.use(Router);
 
@@ -31,10 +35,7 @@ export default new Router({
     {
       path: "/login",
       name: "login",
-      component: Login,
-      meta: {
-        noLogin: true
-      }
+      component: Login
     },
     {
       path: "/movie/:movieid",
@@ -51,6 +52,29 @@ export default new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/account/resent-confirm",
+      name: "resentConfirmEmail",
+      component: ResentConfirmEmail,
+      meta: {
+        noLogin: true
+      }
+    },
+    {
+      path: "/auth/confirm-email",
+      name: "comfirnEmail",
+      component: ConfirmEmail
+    },
+    {
+      path: "/account/reset-password",
+      name: "sentResetPasswordEmail",
+      component: SentResetPasswordEmail
+    },
+    {
+      path: "/auth/reset-password",
+      name: "resetPassword",
+      component: ResetPassword
     }
   ]
 });
