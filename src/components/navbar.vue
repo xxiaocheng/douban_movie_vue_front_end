@@ -3,10 +3,10 @@
     <nav class="navbar is-spaced " role="navigation" aria-label="main navigation"  >
         <div class="navbar-brand">
             <!-- 导航栏左边的选项,总是可见,通常包含logo或者一些其他链接-->
-            <a href="/" class="navbar-item"> 
+            <router-link to="/" class="navbar-item"> 
                 <!--logo pic -->
-                <img src="" width="28" height="28">
-            </a>
+                <img src="../assets/douban_movie.png" width="112" height="28">
+            </router-link>
             <a role="button" class="navbar-burger burger "  aria-label="menu" aria-expanded="false" v-on:click='toggleNav' v-bind:class="{'is-active':isToggleNav}">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -17,18 +17,19 @@
             <!--导航栏右边的选项,在移动端隐藏-->
             <div class="navbar-start">
                 <!-- 导航栏左边部分-->
-                <a href="/home" class="navbar-item">
+                <router-link to="/" class="navbar-item" >
                     <i class="material-icons">
                         home
                     </i>
-                    首页
-                </a>
-                <a href="/cinema" class="navbar-item">
+                        首页
+                </router-link>
+                
+                <router-link to="/cinema" class="navbar-item">
                     <i class="material-icons">
                         local_movies
                     </i>
                     影讯
-                </a>
+                </router-link>
                 <a href="/recommend" class="navbar-item">
                     <i class="material-icons">
                         pan_tool
@@ -151,7 +152,8 @@ export default {
             })
         },
         handleSelect(item){
-            console.log(item.movieId)
+            // console.log(item.movieId)
+            this.$router.push('/movie/'+item.movieId);
         },
         logout(){
             localStorage.removeItem('isLogin');

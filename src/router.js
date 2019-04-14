@@ -9,6 +9,7 @@ import ResentConfirmEmail from "./views/ResentConfirmEmail.vue";
 import ConfirmEmail from "./views/ConfirmEmail.vue";
 import SentResetPasswordEmail from "./views/SentResetPasswordEmail.vue";
 import ResetPassword from "./views/ResetPassword.vue";
+import ConfirmChangeEmail from './views/ConfirmChangeEmail.vue'
 
 Vue.use(Router);
 
@@ -75,6 +76,14 @@ export default new Router({
       path: "/auth/reset-password",
       name: "resetPassword",
       component: ResetPassword
+    },
+    {
+      path:'/auth/change-email',
+      name:"changeEmail",
+      component:ConfirmChangeEmail,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 });

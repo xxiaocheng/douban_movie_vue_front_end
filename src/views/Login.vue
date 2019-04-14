@@ -9,7 +9,6 @@
 import myLoginForm from "@/components/loginform.vue";
 
 export default {
-    name:"loginform",
     components:{
         myLoginForm
     }

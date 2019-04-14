@@ -100,7 +100,7 @@ export default {
                 localStorage.setItem('isLogin','true');
                 this.showSucceedMess(this.loginForm.username);
                 this.$store.commit("changeLogin", true);
-                this.$router.push("/home")
+                this.$router.push("/")
             })
             .catch(error=>{
                 this.showFailedMess(error.response.data.message);
