@@ -7,7 +7,7 @@ import axios from "axios";
 import "bulma/css/bulma.css";
 import "material-design-icons/iconfont/material-icons.css";
 
-axios.defaults.baseURL = "http://192.168.2.220:5000/api/v1";
+axios.defaults.baseURL = "http://localhost:5000/api/v1";
 //axios.defaults.timeout = 10000;
 const token = localStorage.getItem("token");
 if (token) {

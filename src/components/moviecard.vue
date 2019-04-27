@@ -13,11 +13,9 @@
                     </li>
                     <li class="film-rate">
                         <el-rate
-                            v-bind:v-model="movie.score"
+                            v-model="movie.score/2"
                             disabled
-                            show-score
-                            text-color="#ff9900"
-                            score-template="{value}">
+                            text-color="#ff9900">
                         </el-rate>
                     </li>
                     <li class="film-button">
@@ -60,7 +58,6 @@ export default {
   min-height: 500px;
   .movie-container{
     width: 700px;
-    border-top: 1px dashed #ccc;
     margin-top: -10px;
     .movieTag{
       padding-top: 20px;

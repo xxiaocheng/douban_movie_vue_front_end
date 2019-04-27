@@ -98,6 +98,7 @@ export default {
             .then(response=>{
                 localStorage.setItem('token',response.data.access_token);
                 localStorage.setItem('isLogin','true');
+                localStorage.setItem('username',username);
                 this.showSucceedMess(this.loginForm.username);
                 this.$store.commit("changeLogin", true);
                 this.$router.push("/")

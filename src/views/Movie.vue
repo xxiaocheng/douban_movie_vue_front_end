@@ -30,7 +30,8 @@ export default {
             
         })
         .catch(error=>{
-             console.log('get movie detail error');
+            console.log('get movie detail error');
+            this.$store.commit('changeMovieDetailLoading',false);
         })
     }
 }

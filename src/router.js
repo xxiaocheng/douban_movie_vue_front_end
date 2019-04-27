@@ -9,7 +9,9 @@ import ResentConfirmEmail from "./views/ResentConfirmEmail.vue";
 import ConfirmEmail from "./views/ConfirmEmail.vue";
 import SentResetPasswordEmail from "./views/SentResetPasswordEmail.vue";
 import ResetPassword from "./views/ResetPassword.vue";
-import ConfirmChangeEmail from './views/ConfirmChangeEmail.vue'
+import ConfirmChangeEmail from "./views/ConfirmChangeEmail.vue";
+import People from "./views/People.vue";
+import Celebrity from "./views/Celebrity.vue";
 
 Vue.use(Router);
 
@@ -17,6 +19,14 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/celebrity/:celebrityid",
+      name: "celebrity",
+      component: Celebrity,
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
       path: "/",
       name: "home",
@@ -42,6 +52,14 @@ export default new Router({
       path: "/movie/:movieid",
       name: "moviePage",
       component: Movie,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/people/:username",
+      name: "peoplePage",
+      component: People,
       meta: {
         requiresAuth: true
       }
@@ -78,9 +96,9 @@ export default new Router({
       component: ResetPassword
     },
     {
-      path:'/auth/change-email',
-      name:"changeEmail",
-      component:ConfirmChangeEmail,
+      path: "/auth/change-email",
+      name: "changeEmail",
+      component: ConfirmChangeEmail,
       meta: {
         requiresAuth: false
       }

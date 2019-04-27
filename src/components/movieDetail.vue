@@ -13,8 +13,8 @@
                 <img class="movieImg" :src="movieDetail.image" alt="" >
               </div>
               <div class="info">
-                <span class="p1">导演: </span><span v-for="item in movieDetail.directors" class="attrs">{{item.name}}</span><br>
-                <span class="p1">主演: </span><span v-for="item in movieDetail.casts" class="attrs">{{item.name}}/</span><br>
+                <span class="p1">导演: </span><span v-for="item in movieDetail.directors" class="attrs"><router-link :to="'/celebrity/'+item.id">{{item.name}}</router-link></span><br>
+                <span class="p1">主演: </span><span v-for="item in movieDetail.casts" class="attrs"><router-link :to="'/celebrity/'+item.id">{{item.name}}</router-link>/</span><br>
                 <span class="p1">类型: </span><span v-for="item in movieDetail.genres" class="attrs">{{item}}/</span><br>
                 <span class="p1">制片国家/地区: </span><span v-for="(item,index) in movieDetail.countries" class="attrs">{{item}}</span><br>
                 <span class="p1">又名: </span><span v-for="item in movieDetail.aka" class="attrs">{{item}}</span><br>
@@ -52,7 +52,9 @@
                 </span>
             </div>
             <div class="top" v-if='me2movie.cate!==-1'>
-                <span class="stitle">我 <small>{{me2movie.time}}</small> 看过</span>
+                <span class="stitle" v-if='me2movie.cate===2'>我 <small>{{me2movie.time}}</small> 看过</span>
+                <span class="stitle" v-if='me2movie.cate===1'>我 <small>{{me2movie.time}}</small> 在看</span>
+                <span class="stitle" v-if='me2movie.cate===0'>我 <small>{{me2movie.time}}</small> 想看</span>
                 <br>
                 <span class="score-to"> 我的评价:
                     <el-rate
@@ -63,7 +65,7 @@
                     </el-rate>
                 </span>
                 <a @click="deleteRating()">删除</a><br>
-                <span v-if="me2movie.tags.length!==0">标签: <small v-for=" tag in me2movie.tags">{{tag+' '}}</small></span><br>
+                <span v-if="JSON.stringify(me2movie.tags) !=='[]' ">标签: <small v-for=" tag in me2movie.tags">{{tag+' '}}</small></span><br>
                 <span v-if="me2movie.comment">评价:<small>{{me2movie.comment}}</small></span>
             </div>
           </div>
@@ -71,7 +73,7 @@
               
           </div>
           <div class="summary">
-            <p class="summary-title">{{movieDetail.title}} 的剧情简介  ·  ·  ·  ·  ·  ·</p>
+            <p class="summary-title">{{movieDetail.title}}的剧情简介  ·  ·  ·  ·  ·  ·</p>
             <p class="intro">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{movieDetail.summary}}</p>
           </div>
           <movieComment :movieId="this.movieDetail.id" :title="movieDetail.title"></movieComment>
@@ -101,12 +103,12 @@ export default{
     props:['movieDetail','me2movie'],
     data () {
       return {
-          ratingFormVisible:false,
-          score:0,
-          tags:'',
-          comment:'',
-          typeName:'',
-          movieId:this.movieDetail.id
+        ratingFormVisible:false,
+        score:0,
+        tags:'',
+        comment:'',
+        typeName:'',
+        movieId:this.movieDetail.id
       }
     },
     components: {
@@ -197,7 +199,7 @@ export default{
     width: 950px;
     margin: 30px auto;
     .content{
-      min-height: 420px;
+      min-height: 500px;
       h1{
         word-break: break-all;
         display: block;
@@ -254,7 +256,7 @@ export default{
             }
             .people-sroce{
               float: right;
-              width:200px;
+              width:150px;
               margin: 2px 0 0 0;
               padding: 0 0 0 15px;
               border-left:1px solid #eaeaea;
