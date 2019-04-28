@@ -243,7 +243,7 @@ export default{
               }
               .info{
                 float: left;
-                max-width: 248px;
+                max-width: 240px;
                 word-wrap: break-word;
                 .p1{
                   line-height: 150%;
@@ -256,7 +256,7 @@ export default{
             }
             .people-sroce{
               float: right;
-              width:150px;
+              width:160px;
               margin: 2px 0 0 0;
               padding: 0 0 0 15px;
               border-left:1px solid #eaeaea;

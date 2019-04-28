@@ -86,7 +86,7 @@ export default new Router({
       component: ConfirmEmail
     },
     {
-      path: "/account/reset-password",
+      path: "/auth/forget-password",
       name: "sentResetPasswordEmail",
       component: SentResetPasswordEmail
     },

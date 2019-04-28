@@ -10,6 +10,7 @@
             <el-form-item>
                 <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
                 <el-button @click="resetForm('loginForm')">重置</el-button>
+                <router-link to="/auth/forget-password" class="forget-password">忘记密码?</router-link>
             </el-form-item>
         </el-form>
     </div>
@@ -125,3 +126,11 @@ export default {
     }
 }
 </script>
+
+<style lang="less">
+
+.forget-password{
+    float: right;
+    position: relative;
+}
+</style>
