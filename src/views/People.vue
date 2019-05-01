@@ -5,7 +5,7 @@
                 <div class="left-side">
                     <div class="subject">
                         <div class="mainpic">
-                            <a v-bind:href="peopleInfo.alt"><img :src="peopleInfo.avatar" ></a>
+                            <a ><img :src="peopleInfo.avatar" ></a>
                         </div>
                         <h1>
                             <span class="username title">
@@ -21,8 +21,8 @@
                         <span>{{peopleInfo.loc_name}}</span>
                     </div>
                     <div class="friendship">
-                        粉丝<a>({{followers}})</a>&nbsp;&nbsp;&nbsp;
-                        关注<a>({{peopleInfo.followings_count}})</a>
+                        粉丝<router-link :to="'/people/'+username+'/follower'">({{followers}})</router-link>&nbsp;&nbsp;&nbsp;
+                        关注<router-link :to="'/people/'+username+'/following'">({{peopleInfo.followings_count}})</router-link> 
                         <br>
                         <a @click="follow" v-if="!followHe && loginUser!==peopleInfo.name"><button>关注</button></a>
                         <a @click="unfollow" v-if="followHe"><button>取消关注</button></a>
@@ -78,6 +78,19 @@ export default {
             wishNext:'',
             wishCount:0,
         }
+    },
+    watch:{
+      '$route'(to,from){
+            this.username=this.$route.params.username;
+            this.collectMovies=[];
+            this.wishMovies=[];
+            this.doMovies=[];
+            this.fetchUserInfo();
+            this.fetchMovie('collect');
+            this.fetchMovie('wish');
+            this.fetchMovie('do');
+      },
+
     },
     methods:{
         fetchMore(tabName){
@@ -206,7 +219,8 @@ export default {
         this.fetchMovie('collect');
         this.fetchMovie('wish');
         this.fetchMovie('do');
-    }
+    },
+
 }
 </script>
 

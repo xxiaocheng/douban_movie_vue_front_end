@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movieList v-bind:movies="this.$store.state.movieItems" v-loading="this.$store.state.movieLoading"></movieList>
+    <movieList v-bind:movies="movieItems"  :nextPage='nextPage' :load='loading'></movieList> 
   </div>
 
 </template>
@@ -16,6 +16,9 @@ export default {
     data() {
       return {
         error:false,
+        loading:true,
+        movieItems:[],
+        nextPage:''
       }
     },
     mounted(){
@@ -26,12 +29,17 @@ export default {
         this.$http.get(url
         )
         .then(response=>{
-          this.$store.commit('setMovieItems',response.data.items);
-          this.$store.commit('setNextMovie',response.data.next);
-          this.$store.commit('changeLoading',false)
+          this.movieItems=response.data.items;
+          this.nextPage=response.data.next;
+          // this.$store.commit('setMovieItems',response.data.items);
+          // this.$store.commit('setNextMovie',response.data.next);
+          // this.$store.commit('changeLoading',false)
+          this.loading=false;
+
         })
         .catch(error=>{
-          this.error=true
+          this.error=true;
+          this.loading=false
         })
       },
       loadMore(){

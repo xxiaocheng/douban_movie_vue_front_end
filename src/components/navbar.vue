@@ -48,12 +48,13 @@
                     </i>
                     排行榜
                 </a>
-                <a href="/mine" class="navbar-item">
+                <router-link :to="profileUrl" class="navbar-item">
                     <i class="material-icons">
                         favorite
                     </i>
                     我的电影
-                </a>
+                </router-link>
+                
                 <a class="navbar-item" href="/admin" v-if="this.$store.state.isLogin&&this.$store.state.userRole==='admin'">
                     <i class="material-icons">
                         build
@@ -61,6 +62,14 @@
                     管理
                 </a>
                 <div role="search box" class="navbar-item" >
+                        <el-select v-model="queryCate" placeholder="请选择" style="width:80px">
+                            <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
                     <el-autocomplete
                         v-model="state4"
                         :fetch-suggestions="querySearchAsync"
@@ -125,7 +134,24 @@ export default {
     data(){
         return{
             'isToggleNav':false,
-            'state4':''
+            'state4':'',
+            'queryCate':'movie',
+            options: [{
+                value: 'movie',
+                label: '电影'
+                }, {
+                value: 'people',
+                label: '用户'
+                }, {
+                value: 'celebrity',
+                label: '演员'
+                }],
+            username:localStorage.getItem('username'),
+        }
+    },
+    computed:{
+        profileUrl:function(){
+            return '/people/'+this.username;
         }
     },
     methods:{
@@ -136,14 +162,20 @@ export default {
             this.$http
             .get('/search',{
                 params:{
-                    cate:'movie',
+                    cate:this.queryCate,
                     q:queryString
                 }
             })
             .then(response=>{
                 let suggestions=[]
-                for (var i=0;i<response.data.items.length;i++){
-                    suggestions.push({'value':response.data.items[i].title,'movieId':response.data.items[i].id})
+                if(this.queryCate==='movie'){
+                    for (var i=0;i<response.data.items.length;i++){
+                        suggestions.push({'value':response.data.items[i].title,'id':response.data.items[i].id})
+                    }  
+                }else{
+                    for (var i=0;i<response.data.items.length;i++){
+                        suggestions.push({'value':response.data.items[i].name,'id':response.data.items[i].id})
+                    }
                 }
                 cb(suggestions)
             })
@@ -153,7 +185,13 @@ export default {
         },
         handleSelect(item){
             // console.log(item.movieId)
-            this.$router.push('/movie/'+item.movieId);
+            if (this.queryCate==='movie'){
+                this.$router.push('/movie/'+item.id);
+            }else if(this.queryCate==='people'){
+                this.$router.push('/people/'+item.value);
+            }else{
+                this.$router.push('/celebrity/'+item.id);
+            }
         },
         logout(){
             localStorage.removeItem('isLogin');

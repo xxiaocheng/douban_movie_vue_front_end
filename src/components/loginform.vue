@@ -102,6 +102,7 @@ export default {
                 localStorage.setItem('username',username);
                 this.showSucceedMess(this.loginForm.username);
                 this.$store.commit("changeLogin", true);
+                this.$store.commit("setUsername",username);
                 this.$router.push("/")
             })
             .catch(error=>{

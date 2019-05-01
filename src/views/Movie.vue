@@ -18,21 +18,29 @@ export default {
             me2movie:{}
         }
     },
+    watch:{
+      '$route'(to,from){
+          this.fetchMovieInfo();
+      }
+    },
     mounted(){
-        var url='/movie/'+this.$route.params.movieid;
-        console.log(url)
-        this.$http.get(url
-        )
-        .then(response=>{
-            this.movieInfo=response.data;
-            this.me2movie=response.data.me2movie
-            this.$store.commit('changeMovieDetailLoading',false);
-            
-        })
-        .catch(error=>{
-            console.log('get movie detail error');
-            this.$store.commit('changeMovieDetailLoading',false);
-        })
+        this.fetchMovieInfo();
+    },
+    methods:{
+        fetchMovieInfo(){
+            var url='/movie/'+this.$route.params.movieid;
+            console.log(url)
+            this.$http.get(url
+            )
+            .then(response=>{
+                this.movieInfo=response.data;
+                this.me2movie=response.data.me2movie
+                
+            })
+            .catch(error=>{
+                console.log('get movie detail error');
+            })
+        }
     }
 }
 </script>

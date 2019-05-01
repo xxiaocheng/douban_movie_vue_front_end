@@ -12,6 +12,7 @@ import ResetPassword from "./views/ResetPassword.vue";
 import ConfirmChangeEmail from "./views/ConfirmChangeEmail.vue";
 import People from "./views/People.vue";
 import Celebrity from "./views/Celebrity.vue";
+import Friends from "./views/Friends.vue";
 
 Vue.use(Router);
 
@@ -19,6 +20,15 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/people/:username/:cate",
+      name: "friends",
+      component: Friends,
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
       path: "/celebrity/:celebrityid",
       name: "celebrity",

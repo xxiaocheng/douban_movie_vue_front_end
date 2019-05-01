@@ -7,16 +7,10 @@ export default new Vuex.Store({
   state: {
     isLogin: localStorage.getItem("isLogin") || false,
     token: localStorage.getItem("token") || "",
-    usename: {},
-    movieLoading: true,
-    nextMovie: null,
-    movieItems: [],
-    movieDetailLoading: true
+    usename: localStorage.getItem("username") || "",
+    messageCount: "0"
   },
   mutations: {
-    setMovieItems(state, items) {
-      state.movieItems = items;
-    },
     changeLogin(state, flag) {
       state.isLogin = flag;
     },
@@ -25,15 +19,6 @@ export default new Vuex.Store({
     },
     setUsername(state, data) {
       state.usename = data;
-    },
-    changeLoading(state, data) {
-      state.movieLoading = data;
-    },
-    setNextMovie(state, data) {
-      state.nextMovie = data;
-    },
-    changeMovieDetailLoading(state, data) {
-      state.movieDetailLoading = data;
     }
   },
   actions: {}

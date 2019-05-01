@@ -88,9 +88,17 @@
                 :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
             </el-rate><br>
             标签:<br>
-            <input class="input" type="text" placeholder="多个标签用空格分隔" v-model='tags'><br>
+            <el-input v-model="tags" placeholder="多个标签用空格分隔" class="" type="text" ></el-input>
+
+            <!-- <input class="input" type="text" placeholder="多个标签用空格分隔" v-model='tags'><br> -->
             评论:<br>
-            <input class="input" type="text" placeholder="输入评论 ·  ·  · " v-model='comment'><br>
+            <el-input
+              type="textarea"
+              autosize
+              placeholder="请输入评论 ·  ·  · "
+              v-model="comment" >
+            </el-input>
+            <!-- <input class="input" type="text" placeholder="输入评论 ·  ·  · " v-model='comment'><br> -->
             <div slot="footer" class="dialog-footer">
                 <el-button @click="cancelRating()">取 消</el-button>
                 <el-button type="primary" @click="rating">确 定</el-button>

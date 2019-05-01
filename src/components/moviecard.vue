@@ -1,7 +1,7 @@
 <template>
-    <div class="moviesList" >
+    <div class="moviesList" v-loading="loading">
         <div class="movie-container">
-            <div class="movieTag" v-for="movie in movies" >
+            <div class="movieTag" v-for="movie in moviesItems" >
                 <ul>
                     <li class="film-pic">
                         <router-link v-bind:to="'/movie/'+movie.id">
@@ -22,26 +22,47 @@
                     </li>
                 </ul>
             </div>
-            <div class="load-more" v-if="this.$store.state.nextMovie" v-on:click="loadMore">加载更多</div>
+            <div class="load-more" v-if="next" v-on:click="loadMore">加载更多</div>
         </div>
   </div>
 </template>
 <script>
 export default {
-    props:{
-        movies:Array
+    props:['movies','nextPage','load'],
+    data(){
+      return{
+        next:this.nextPage,
+        moviesItems:this.movies,
+        loading:this.load,
+      }
+    },
+    watch:{
+      nextPage(a,b){
+        this.next=a;
+      },
+      movies(a,b){
+        this.moviesItems=a;
+      },
+      load(a,b){
+        this.loading=a;
+      }
+      
     },
     methods: {
       loadMore(){
-          this.$http.get(this.$store.state.nextMovie
-          ).then(response=>{
-            this.$store.commit('setMovieItems',this.$store.state.movieItems.concat(response.data.items));
-            this.$store.commit('setNextMovie',response.data.next);
-            this.$store.commit('changeLoading',false)
-            })
-            .catch(error=>{
-            this.error=true
-            })
+        this.loading=true;
+        this.$http.get(this.next
+        ).then(response=>{
+          this.moviesItems=this.moviesItems.concat(response.data.items);
+          this.next=response.data.next;
+          this.loading=false;
+          // this.$store.commit('setMovieItems',this.$store.state.movieItems.concat(response.data.items));
+          // this.$store.commit('setNextMovie',response.data.next);
+          // this.$store.commit('changeLoading',false)
+          })
+          .catch(error=>{
+            this.loading=false;            
+          })
       }  
     },
 }
