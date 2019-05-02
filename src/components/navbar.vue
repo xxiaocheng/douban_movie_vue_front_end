@@ -30,37 +30,36 @@
                     </i>
                     影讯
                 </router-link>
-                <a href="/recommend" class="navbar-item">
+                <router-link to="/recommend" class="navbar-item">
                     <i class="material-icons">
                         pan_tool
                     </i>
                     猜你想看
-                </a>
-                <a href="/explore" class="navbar-item">
+                </router-link>
+                <router-link to="/explore" class="navbar-item">
                     <i class="material-icons">
                         explore
                     </i>
                     选电影
-                </a>
-                <a href="/chart" class="navbar-item">
+                </router-link>
+                <router-link to="/chart" class="navbar-item">
                     <i class="material-icons">
                         line_weight
                     </i>
                     排行榜
-                </a>
+                </router-link>
                 <router-link :to="profileUrl" class="navbar-item">
                     <i class="material-icons">
                         favorite
                     </i>
                     我的电影
                 </router-link>
-                
-                <a class="navbar-item" href="/admin" v-if="this.$store.state.isLogin&&this.$store.state.userRole==='admin'">
+                <router-link class="navbar-item" to="/admin" v-if="this.$store.state.isLogin&&this.$store.state.userRole==='admin'">
                     <i class="material-icons">
                         build
                     </i>
                     管理
-                </a>
+                </router-link>
                 <div role="search box" class="navbar-item" >
                         <el-select v-model="queryCate" placeholder="请选择" style="width:80px">
                             <el-option
@@ -76,7 +75,7 @@
                         placeholder="请输入内容"
                         @select="handleSelect">
                     </el-autocomplete>
-                    <el-button type="primary" icon="el-icon-search">搜索</el-button>
+                    <!-- <el-button type="primary" icon="el-icon-search">搜索</el-button> -->
                 </div>
 
             </div>
@@ -95,7 +94,7 @@
                 <div role="message buttom" class="navbar-item" v-if="this.$store.state.isLogin" >
                     <el-badge :value="this.$store.state.messageCount" :max='99' class="item">
                         <el-button size="medium">
-                            <a href="/">消息</a>
+                            <router-link to="/">消息</router-link>
                         </el-button>
                     </el-badge>
                 </div>
@@ -104,15 +103,15 @@
                 </div>
                 <div class="navbar-item has-dropdown is-hoverable" v-if="this.$store.state.isLogin">
                     <!--下拉菜单-->
-                    <a href="/account" class="navbar-link ">
+                    <router-link to="/account" class="navbar-link ">
                         <i class="material-icons">
                             account_circle
                         </i>
-                    </a>
+                    </router-link>
                     <div class="navbar-dropdown is-boxed">
-                        <a href="/setting" class="navbar-item">
-                        账号管理
-                        </a>
+                        <router-link to="/setting" class="navbar-item">
+                            账号管理
+                        </router-link>
                         <hr class="navbar-divider">
                         <a  class="navbar-item" v-on:click="logout">
                         注销登录

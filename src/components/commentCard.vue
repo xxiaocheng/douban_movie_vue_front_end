@@ -3,7 +3,7 @@
     <div class="rating" v-for='(rating,index) in comments' v-if="comments">
       <hr>
       <el-card :body-style="{ padding: '0px' }">
-        <div class="head">
+        <div class="comment-head">
           <a><img :src="rating.useravatar"  class="image avatar"></a>
           <router-link :to="'/people/'+rating.username"><span class="name">{{rating.username}}</span></router-link>
           <span class="cate" v-if="rating.cate===2">看过</span>
@@ -83,7 +83,7 @@ export default {
 @import "../../style/color";
     .rating{
       width: 700px;
-      .head{
+      .comment-head{
         padding: 0;
         margin-bottom: 0;
         height: 30px;

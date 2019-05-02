@@ -13,6 +13,10 @@ import ConfirmChangeEmail from "./views/ConfirmChangeEmail.vue";
 import People from "./views/People.vue";
 import Celebrity from "./views/Celebrity.vue";
 import Friends from "./views/Friends.vue";
+import Cinema from "./views/Cinema.vue";
+import Recommend from "./views/Recommend.vue";
+import Chart from "./views/Chart.vue";
+import Explore from "./views/Explore.vue";
 
 Vue.use(Router);
 
@@ -20,6 +24,35 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/explore",
+      name: "choice movies",
+      component: Explore,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/chart",
+      component: Chart,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/recommend",
+      component: Recommend,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/cinema",
+      component: Cinema,
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
       path: "/people/:username/:cate",
       name: "friends",

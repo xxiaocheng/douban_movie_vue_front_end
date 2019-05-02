@@ -5,10 +5,10 @@
                 <el-input type="string" v-model="loginForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
-                <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
+                <el-input type="password" v-model="loginForm.pass" autocomplete="off" @keyup.native.enter="submitForm('loginForm')"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
+                <el-button type="primary" @click="submitForm('loginForm')" >登陆</el-button>
                 <el-button @click="resetForm('loginForm')">重置</el-button>
                 <router-link to="/auth/forget-password" class="forget-password">忘记密码?</router-link>
             </el-form-item>

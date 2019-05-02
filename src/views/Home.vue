@@ -42,9 +42,6 @@ export default {
           this.loading=false
         })
       },
-      loadMore(){
-        this.getMovie(this.nextPage)
-      }
     }
 }
 </script>
