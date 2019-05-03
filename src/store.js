@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     isLogin: localStorage.getItem("isLogin") || false,
     token: localStorage.getItem("token") || "",
-    usename: localStorage.getItem("username") || "",
+    username: localStorage.getItem("username") || "",
     messageCount: "0"
   },
   mutations: {
@@ -18,7 +18,7 @@ export default new Vuex.Store({
       state.messageCount = data;
     },
     setUsername(state, data) {
-      state.usename = data;
+      state.username = data;
     }
   },
   actions: {}

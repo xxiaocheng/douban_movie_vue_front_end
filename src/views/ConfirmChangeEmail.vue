@@ -100,7 +100,7 @@ export default {
 <style scoped>
 .confirmChangeEmail{
     height: 200px;
-    width: 300px;
+    width: 350px;
     position: absolute;
     left: 15%;
     top:25%

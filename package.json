@@ -10,9 +10,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bulma": "^0.7.4",
+    "element-china-area-data": "^4.1.2",
     "element-ui": "^2.4.5",
     "material-design-icons": "^3.0.1",
     "vue": "^2.6.6",
+    "vue-cropper": "^0.4.9",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

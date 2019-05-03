@@ -5,7 +5,6 @@ import NotFound from "./views/404.vue";
 import Sign from "./views/Sign.vue";
 import Login from "./views/Login.vue";
 import Movie from "./views/Movie.vue";
-import ResentConfirmEmail from "./views/ResentConfirmEmail.vue";
 import ConfirmEmail from "./views/ConfirmEmail.vue";
 import SentResetPasswordEmail from "./views/SentResetPasswordEmail.vue";
 import ResetPassword from "./views/ResetPassword.vue";
@@ -17,6 +16,8 @@ import Cinema from "./views/Cinema.vue";
 import Recommend from "./views/Recommend.vue";
 import Chart from "./views/Chart.vue";
 import Explore from "./views/Explore.vue";
+import Settings from "./views/Settings.vue";
+import Notification from "./views/Notification.vue";
 
 Vue.use(Router);
 
@@ -24,6 +25,20 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/notification",
+      component: Notification,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/setting",
+      component: Settings,
+      meta: {
+        requiresAuth: true
+      }
+    },
     {
       path: "/explore",
       name: "choice movies",
@@ -113,14 +128,6 @@ export default new Router({
       component: NotFound,
       meta: {
         requiresAuth: false
-      }
-    },
-    {
-      path: "/account/resent-confirm",
-      name: "resentConfirmEmail",
-      component: ResentConfirmEmail,
-      meta: {
-        noLogin: true
       }
     },
     {

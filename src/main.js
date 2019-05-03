@@ -6,6 +6,7 @@ import "./plugins/element.js";
 import axios from "axios";
 import "bulma/css/bulma.css";
 import "material-design-icons/iconfont/material-icons.css";
+import VueCropper from "vue-cropper";
 
 axios.defaults.baseURL = "http://localhost:5000/api/v1";
 //axios.defaults.timeout = 10000;
@@ -57,6 +58,7 @@ axios.interceptors.response.use(
   }
 );
 
+Vue.use(VueCropper);
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 new Vue({
@@ -64,4 +66,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
-

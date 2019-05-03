@@ -92,7 +92,7 @@ export default {
             params.append('grant_type','password');
             params.append('username',username);
             params.append('password',pass);
-            this.$http.post('/account/resent-confirm',
+            this.$http.post('/auth/resent-confirm',
                 params
             )
             .then(response=>{
@@ -122,12 +122,10 @@ export default {
 </script>
 
 
-<style>
+<style lang="less">
 .sentemailform{
-    height: 200px;
-    width: 400px;
-    position: absolute;
-    left: 15%;
-    top:25%
+    height: 70%;
+    width: 50%;
 }
 </style>
+
