@@ -52,7 +52,7 @@
           <router-link
             class="navbar-item"
             to="/admin"
-            v-if="this.$store.state.isLogin&&this.$store.state.userRole==='admin'"
+            v-if="isLogin&&this.$store.state.userRole==='admin'"
           >
             <i class="material-icons">build</i>
             管理
@@ -87,7 +87,6 @@
           </div>
           <div role="message buttom" class="navbar-item" v-if="this.$store.state.isLogin">
             <el-badge :value="this.$store.state.messageCount" :max="99" class="item">
-              
                 <router-link to="/notification">
                   <i class="material-icons">message</i>
                 </router-link>
@@ -120,6 +119,7 @@
 export default {
   data() {
     return {
+      isLogin:false,
       isToggleNav: false,
       state4: "",
       queryCate: "movie",
@@ -146,6 +146,19 @@ export default {
     }
   },
   methods: {
+    getMessageCount(){
+      this.$http.get('/notification/new_count',
+      )
+      .then(response=>{
+        this.$store.commit('changeMessageCount',response.data.count);
+        setTimeout(() => {
+          this.getMessageCount();
+        }, 5000);
+      })
+      .catch(error=>{
+        console.log('get message count error.');
+      })
+    },
     toggleNav: function() {
       this.isToggleNav = !this.isToggleNav;
     },
@@ -196,7 +209,13 @@ export default {
       this.$router.push("/");
       this.$store.commit("changeLogin", false);
     }
-  }
+  },
+  created() {
+    this.isLogin=this.$store.state.isLogin;
+    if (this.isLogin){
+    this.getMessageCount();
+    }
+  },
 };
 </script>
 
