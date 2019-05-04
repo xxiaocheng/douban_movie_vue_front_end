@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="friend in friendData" v-if="friendData.length!==0">
-      <el-card :body-style="{ padding: '0px' ,height:'60px'}">
+      <el-card :body-style="{ padding: '0px' ,height:'60px'}" shadow="hover">
         <img :src="friend.info.who_avatar" class="avatar">
         <div class="friend-content">
           <router-link :to="'/people/'+friend.info.who_name">{{friend.info.who_name}}&nbsp;&nbsp;</router-link>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card" v-for="user in friendsItems" v-if="friendsItems">
-      <el-card shadow="always" :body-style="{ padding: '0px' }">
+      <el-card shadow="hover" :body-style="{ padding: '0px' }">
         <div class="avatar">
           <router-link :to="getProfileUrl(user.name)">
             <img :src="user.avatar"  >

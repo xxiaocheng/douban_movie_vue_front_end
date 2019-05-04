@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="movie" v-for="movie in movies" v-if="movies">
-      <el-card :body-style="{ padding: '0px' }" shadow="always">
+      <el-card :body-style="{ padding: '0px' }" shadow="hover">
         <router-link :to="'/movie/'+movie.movie.id">
           <img :src="movie.movie.image" class="image">
           <div class="content">

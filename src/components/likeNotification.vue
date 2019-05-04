@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="like in likeData" v-if="likeData.length!==0">
-      <el-card :body-style="{ padding: '0px' ,height:'60px'}">
+      <el-card :body-style="{ padding: '0px' ,height:'60px'}" shadow="hover">
         <img :src="like.info.who_avatar" class="avatar">
         <div class="like-content">
           <router-link :to="'/people/'+like.info.who_name">{{like.info.who_name}}&nbsp;&nbsp;</router-link>点赞了你在&nbsp;&nbsp;

@@ -2,7 +2,7 @@
 <div>
     <div class="rating" v-for='(rating,index) in comments' v-if="comments">
       <hr>
-      <el-card :body-style="{ padding: '0px' }">
+      <el-card :body-style="{ padding: '0px' }" shadow="hover">
         <div class="comment-head">
           <a><img :src="rating.useravatar"  class="image avatar"></a>
           <router-link :to="'/people/'+rating.username"><span class="name">{{rating.username}}</span></router-link>
