@@ -10,7 +10,9 @@ import VueCropper from "vue-cropper";
 
 axios.defaults.baseURL = "http://localhost:5000/api/v1";
 //axios.defaults.timeout = 10000;
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
+const token = store.state.token;
+console.log("111");
 if (token) {
   axios.defaults.headers.common["Authorization"] = "bearer " + token;
 }
@@ -36,6 +38,15 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     next();
+  }
+  if (to.meta.requiresAdmin) {
+    if (store.state.role === "user") {
+      next({
+        path: "/"
+      });
+    } else {
+      next();
+    }
   }
 });
 // axios 全局拦截器

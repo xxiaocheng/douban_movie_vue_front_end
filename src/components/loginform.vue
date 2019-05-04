@@ -18,7 +18,7 @@
         <router-link to="/auth/forget-password" class="forget-password">忘记密码?</router-link>
       </el-form-item>
     </el-form>
-    <el-dialog title="重新发送确认邮件" :visible.sync="ratingFormVisible"  >
+    <el-dialog title="重新发送确认邮件" :visible.sync="ratingFormVisible">
       <resentConfirmEmail></resentConfirmEmail>
     </el-dialog>
   </div>
@@ -107,12 +107,13 @@ export default {
       this.$http
         .post("/oauth/token", params)
         .then(response => {
-          localStorage.setItem("token", response.data.access_token);
-          localStorage.setItem("isLogin", "true");
-          localStorage.setItem("username", username);
           this.showSucceedMess(this.loginForm.username);
           this.$store.commit("changeLogin", true);
           this.$store.commit("setUsername", username);
+          this.$store.commit("setToken", response.data.access_token);
+          this.$store.commit('setRole',response.data.role);
+          this.$http.defaults.headers.common["Authorization"] = "bearer " +response.data.access_token;
+
           this.$router.push("/");
         })
         .catch(error => {
@@ -122,7 +123,7 @@ export default {
             this.errorCount === 3
           ) {
             this.$message.info("未收到确认邮件?");
-            this.ratingFormVisible=true;
+            this.ratingFormVisible = true;
           } else {
             if (this.errorCount === 5) {
               this.disableLogin = true;
@@ -155,8 +156,8 @@ export default {
   float: right;
   position: relative;
 }
-.el-dialog{
-    height: auto;
-    width: 40%;
+.el-dialog {
+  height: auto;
+  width: 40%;
 }
 </style>

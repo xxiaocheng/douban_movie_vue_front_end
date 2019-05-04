@@ -31,6 +31,22 @@
               <button>取消关注</button>
             </a>
           </div>
+          <div class="role-set">
+            <el-select
+              v-model="currentRole.role_id"
+              placeholder="请选择"
+              v-if="this.$store.state.role==='administrator'"
+              class="role-options"
+            >
+              <el-option
+                v-for="role in roles"
+                :key="role.role_id"
+                :label="role.role_name"
+                :value="role.role_id"
+              ></el-option>
+            </el-select>
+            <el-button  size="medium" @click="setRole()" class="set-role-button">更改权限</el-button>
+          </div>
         </div>
       </div>
       <div class="people-active">
@@ -62,6 +78,7 @@ export default {
   components: {
     peopleMovieCard
   },
+  props: ["username"],
   data() {
     return {
       loginUser: localStorage.getItem("username"),
@@ -69,7 +86,6 @@ export default {
       loadingUserInfo: true,
       followHe: false,
       followers: 0,
-      username: this.$route.params.username,
       signature: "",
       activeName: "collect",
       collectMovies: [],
@@ -82,7 +98,9 @@ export default {
       wishNext: "",
       wishCount: 0,
       codeToText: CodeToText,
-      location: ""
+      location: "",
+      currentRole: {},
+      roles: []
     };
   },
   watch: {
@@ -95,9 +113,45 @@ export default {
       this.fetchMovie("collect");
       this.fetchMovie("wish");
       this.fetchMovie("do");
+      if (this.$store.state.role === "administrator") {
+        this.getCurrentRole();
+        this.getAllRole();
+      }
     }
   },
   methods: {
+    getCurrentRole() {
+      this.$http
+        .get("/user/" + this.username + "/role")
+        .then(response => {
+          this.currentRole = response.data;
+        })
+        .catch(error => {
+          console.log("get current role error");
+        });
+    },
+    getAllRole() {
+      this.$http
+        .get("/roles")
+        .then(response => {
+          this.roles = response.data.roles;
+        })
+        .catch(error => {
+          console.log("get all role info error");
+        });
+    },
+    setRole() {
+      const params = new URLSearchParams();
+      params.append("role_id",this.currentRole.role_id);
+      this.$http
+        .post("/user/" + this.username + "/role", params)
+        .then(response => {
+          this.$message.success("设置用户权限成功");
+        })
+        .catch(error => {
+          this.$message.error("设置用户权限失败");
+        });
+    },
     fetchMore(tabName) {
       if (tabName === "do") {
         this.fetchMovie("-1", this.doNext);
@@ -235,11 +289,15 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.fetchUserInfo();
     this.fetchMovie("collect");
     this.fetchMovie("wish");
     this.fetchMovie("do");
+    if (this.$store.state.role === "administrator") {
+      this.getCurrentRole();
+      this.getAllRole();
+    }
   }
 };
 </script>
@@ -321,6 +379,14 @@ export default {
             color: #333;
             margin-right: 10px;
             border-radius: 4px;
+          }
+        }
+        .role-set {
+          display: inline;
+          .role-options {
+          }
+          .set-role-button{
+            padding: 8px;
           }
         }
       }

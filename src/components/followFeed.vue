@@ -99,10 +99,10 @@ export default {
 <style lang="less">
 @import "./../../style/color.less";
 
-.el-card {
-  height: 340px;
-}
 .feed-card {
+  .el-card {
+    height: 340px;
+  }
   .user {
     height: 100px;
     .avatar {

@@ -18,9 +18,10 @@
                 <span class="p1">类型: </span><span v-for="item in movieDetail.genres" class="attrs">{{item}}/</span><br>
                 <span class="p1">制片国家/地区: </span><span v-for="(item,index) in movieDetail.countries" class="attrs">{{item}}</span><br>
                 <span class="p1">又名: </span><span v-for="item in movieDetail.aka" class="attrs">{{item}}</span><br>
-                <span class="p1" v-if="movieDetail.seasons_count">总季数: </span><span v-if="movieDetail.seasons_count">{{movieDetail.seasons_count}}</span><br>
-                <span class="p1" v-if="movieDetail.episodes_count">集数: </span><span v-if="movieDetail.episodes_count">{{movieDetail.episodes_count}}</span><br>
-                <span class="p1" v-if="movieDetail.current_season">季数: </span><span v-if="movieDetail.current_season">{{movieDetail.current_season}}</span><br>
+                <span class="p1" v-if="movieDetail.seasons_count">总季数: </span><span v-if="movieDetail.seasons_count">{{movieDetail.seasons_count}}</span><br v-if="movieDetail.seasons_count">
+                <span class="p1" v-if="movieDetail.episodes_count">集数: </span><span v-if="movieDetail.episodes_count">{{movieDetail.episodes_count}}</span><br v-if="movieDetail.episodes_count">
+                <span class="p1" v-if="movieDetail.current_season">季数: </span><span v-if="movieDetail.current_season">{{movieDetail.current_season}}</span><br v-if="movieDetail.current_season">
+                <span class="p1" v-if="movieDetail.douban_id">豆瓣链接: </span><span><a :href="'https://movie.douban.com/subject/'+movieDetail.douban_id" target="_blank">{{movieDetail.douban_id}}</a> </span><br v-if="movieDetail.douban_id">
               </div>
             </div>
             <div class="people-sroce">

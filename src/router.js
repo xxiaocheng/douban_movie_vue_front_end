@@ -18,6 +18,7 @@ import Chart from "./views/Chart.vue";
 import Explore from "./views/Explore.vue";
 import Settings from "./views/Settings.vue";
 import Notification from "./views/Notification.vue";
+import Admin from "./views/Admin.vue";
 
 Vue.use(Router);
 
@@ -25,6 +26,14 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: "/admin",
+      component: Admin,
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
+      }
+    },
     {
       path: "/notification",
       component: Notification,
@@ -117,6 +126,7 @@ export default new Router({
     {
       path: "/people/:username",
       name: "peoplePage",
+      props: true,
       component: People,
       meta: {
         requiresAuth: true

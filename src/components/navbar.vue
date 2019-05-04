@@ -52,7 +52,7 @@
           <router-link
             class="navbar-item"
             to="/admin"
-            v-if="isLogin&&this.$store.state.userRole==='admin'"
+            v-if="this.$store.state.isLogin&&this.$store.state.role!=='user'"
           >
             <i class="material-icons">build</i>
             管理
@@ -87,15 +87,18 @@
           </div>
           <div role="message buttom" class="navbar-item" v-if="this.$store.state.isLogin">
             <el-badge :value="this.$store.state.messageCount" :max="99" class="item">
-                <router-link to="/notification">
-                  <i class="material-icons">message</i>
-                </router-link>
+              <router-link to="/notification">
+                <i class="material-icons">message</i>
+              </router-link>
             </el-badge>
           </div>
           <div class="navbar-item">
             <!--占位-->
           </div>
-          <div class="navbar-item has-dropdown is-hoverable account" v-if="this.$store.state.isLogin">
+          <div
+            class="navbar-item has-dropdown is-hoverable account"
+            v-if="this.$store.state.isLogin"
+          >
             <!--下拉菜单-->
             <router-link to="/setting" class="navbar-link">
               <i class="material-icons">account_circle</i>
@@ -119,7 +122,7 @@
 export default {
   data() {
     return {
-      isLogin:false,
+      isLogin: false,
       isToggleNav: false,
       state4: "",
       queryCate: "movie",
@@ -146,18 +149,20 @@ export default {
     }
   },
   methods: {
-    getMessageCount(){
-      this.$http.get('/notification/new_count',
-      )
-      .then(response=>{
-        this.$store.commit('changeMessageCount',response.data.count);
-        setTimeout(() => {
-          this.getMessageCount();
-        }, 5000);
-      })
-      .catch(error=>{
-        console.log('get message count error.');
-      })
+    getMessageCount() {
+      this.$http
+        .get("/notification/new_count")
+        .then(response => {
+          this.$store.commit("changeMessageCount", response.data.count);
+          setTimeout(() => {
+            if (this.$store.state.isLogin) {
+              this.getMessageCount();
+            }
+          }, 5000);
+        })
+        .catch(error => {
+          console.log("get message count error.");
+        });
     },
     toggleNav: function() {
       this.isToggleNav = !this.isToggleNav;
@@ -206,22 +211,24 @@ export default {
     logout() {
       localStorage.removeItem("isLogin");
       localStorage.removeItem("token");
-      this.$router.push("/");
+      localStorage.removeItem("role");
+      localStorage.removeItem("username");
+      this.$router.push("/login");
       this.$store.commit("changeLogin", false);
     }
   },
   created() {
-    this.isLogin=this.$store.state.isLogin;
-    if (this.isLogin){
-    this.getMessageCount();
+    var isLogin = this.$store.state.isLogin;
+    if (this.isLogin) {
+      this.getMessageCount();
     }
-  },
+  }
 };
 </script>
 
 <style lang="less">
-.account{
-    top: -5px;
-    position: relative;
+.account {
+  top: -5px;
+  position: relative;
 }
 </style>
