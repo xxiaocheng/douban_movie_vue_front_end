@@ -109,8 +109,8 @@ export default {
         this.loading=false;
       })
     },
-    fetchAvatar(){
-      var url='/user?type=summary';
+    fetchAvatar(username){
+      var url='/user/'+username+'?type=summary';
       this.$http.get(url
       )
       .then(response=>{
@@ -124,7 +124,7 @@ export default {
   created() {
     this.validCate();
     this.fetchFriends(this.friendsType);
-    this.fetchAvatar();
+    this.fetchAvatar(this.username);
   }
 };
 </script>

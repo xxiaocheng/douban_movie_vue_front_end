@@ -204,9 +204,13 @@ export default {
         .get(people_frofile_url)
         .then(response => {
           this.peopleInfo = response.data;
-          this.location = this.codeToLocal(response.data.loc_name);
+          if (response.data.loc_name) {
+            this.location = this.codeToLocal(response.data.loc_name);
+          }
           this.followHe = response.data.follow;
           this.followers = response.data.followers_count;
+          console.log(response.data.followers_count);
+          console.log(this.followers);
           this.signature = response.data.signature;
           this.loadingUserInfo = false;
         })
