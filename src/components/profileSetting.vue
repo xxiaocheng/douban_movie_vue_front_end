@@ -6,13 +6,17 @@
       :rules="rules"
       ref="profileForm"
       label-width="100px"
-      class="profile-form" 
+      class="profile-form"
     >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="profileForm.username" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="个性签名" prop="signature">
-        <el-input type="textarea" v-model="profileForm.signature" autocomplete="off"></el-input>
+        <el-input
+          type="textarea"
+          v-model="profileForm.signature"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="长居地" prop="location">
         <el-cascader
@@ -23,7 +27,9 @@
         ></el-cascader>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('profileForm')">保存修改</el-button>
+        <el-button type="primary" @click="submitForm('profileForm')"
+          >保存修改</el-button
+        >
         <el-button @click="resetForm('profileForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -92,7 +98,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-            this.putchInfo();
+          this.putchInfo();
           console.log("submit");
         } else {
           console.log("error submit");
@@ -114,21 +120,21 @@ export default {
           console.log("fetch default info error.");
         });
     },
-    putchInfo(){
-        const params = new URLSearchParams();
-        params.append('username',this.profileForm.username);
-        params.append('signature',this.profileForm.signature);
-        var location=this.profileForm.location[0]+'.'+this.profileForm.location[1];
-        params.append('location',location)
-        this.$http.patch('/user',
-        params
-        )
-        .then(response=>{
-            this.$message.success("修改成功!");
+    putchInfo() {
+      const params = new URLSearchParams();
+      params.append("username", this.profileForm.username);
+      params.append("signature", this.profileForm.signature);
+      var location =
+        this.profileForm.location[0] + "." + this.profileForm.location[1];
+      params.append("location", location);
+      this.$http
+        .patch("/user", params)
+        .then(response => {
+          this.$message.success("修改成功!");
         })
-        .catch(error=>{
-            this.$message.error("修改失败,请稍后再试!");
-        })
+        .catch(error => {
+          this.$message.error("修改失败,请稍后再试!");
+        });
     }
   },
   created() {
@@ -137,14 +143,11 @@ export default {
 };
 </script>
 
-
 <style lang="less">
-
-.profile-form{
-    width: 400px;
-    .el-cascader{
-        width: 300px;
-    }
+.profile-form {
+  width: 400px;
+  .el-cascader {
+    width: 300px;
+  }
 }
-
 </style>

@@ -1,43 +1,50 @@
 <template>
   <div>
-    <div class="rating" v-for="(rating,index) in comments" v-if="comments">
-      <hr>
+    <div class="rating" v-for="(rating, index) in comments" v-if="comments">
+      <hr />
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
         <div class="comment-head">
           <a>
-            <img :src="rating.useravatar" class="image avatar">
+            <img :src="rating.useravatar" class="image avatar" />
           </a>
-          <router-link :to="'/people/'+rating.username">
-            <span class="name">{{rating.username}}</span>
+          <router-link :to="'/people/' + rating.username">
+            <span class="name">{{ rating.username }}</span>
           </router-link>
-          <span class="cate" v-if="rating.cate===2">看过</span>
-          <span class="cate" v-if="rating.cate===1">在看</span>
-          <span class="cate" v-if="rating.cate===0">想看</span>
-          <el-rate class="rating-score" v-model="rating.score/2" disabled text-color="#ff9900"></el-rate>
-          <span class="time rating-time">{{ rating.time}}</span>
-          <a class="report" @click="ratingAction(index,'report')">
+          <span class="cate" v-if="rating.cate === 2">看过</span>
+          <span class="cate" v-if="rating.cate === 1">在看</span>
+          <span class="cate" v-if="rating.cate === 0">想看</span>
+          <el-rate
+            class="rating-score"
+            v-model="rating.score / 2"
+            disabled
+            text-color="#ff9900"
+          ></el-rate>
+          <span class="time rating-time">{{ rating.time }}</span>
+          <a class="report" @click="ratingAction(index, 'report')">
             <i class="material-icons">error_outline</i>
           </a>
           <a
             class="like like-status"
-            v-if="rating.me2rating==='like'"
-            @click="ratingAction(index,'unlike')"
+            v-if="rating.me2rating === 'like'"
+            @click="ratingAction(index, 'unlike')"
           >
             <i class="material-icons">favorite</i>
-            <span class="like-count">{{rating.likecount}}</span>
+            <span class="like-count">{{ rating.likecount }}</span>
           </a>
           <a
             class="like unlike-status"
-            v-if="rating.me2rating==='unlike'"
-            @click="ratingAction(index,'like')"
+            v-if="rating.me2rating === 'unlike'"
+            @click="ratingAction(index, 'like')"
           >
             <i class="material-icons">favorite</i>
-            <span class="like-count">{{rating.likecount}}</span>
+            <span class="like-count">{{ rating.likecount }}</span>
           </a>
         </div>
         <div style="padding: 14px;">
           <div class="bottom clearfix">
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{rating.comment}}</p>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ rating.comment }}
+            </p>
           </div>
         </div>
       </el-card>

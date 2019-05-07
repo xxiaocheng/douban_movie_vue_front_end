@@ -1,62 +1,86 @@
 <template>
   <div>
     <div v-loading="loading">
-      <div class="feed-card" v-for="feed in feedData" v-if="feedData.length!==0">
+      <div
+        class="feed-card"
+        v-for="feed in feedData"
+        v-if="feedData.length !== 0"
+      >
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <div class="user">
-            <router-link :to="'/people/'+feed.user.name">
-              <img :src="feed.user.avatar" class="avatar">
+            <router-link :to="'/people/' + feed.user.name">
+              <img :src="feed.user.avatar" class="avatar" />
             </router-link>
             <div class="user-title">
-              <router-link :to="'/people/'+feed.user.name">
-                <span>{{feed.user.name}}</span>
-              </router-link>&nbsp;
-              <span v-if="feed.cate===0" style="color:#888">想看</span>
-              <span v-if="feed.cate===1" style="color:#888">在看</span>
-              <span v-if="feed.cate===2" style="color:#888">看过</span>
-              <span class="feed-time">{{feed.time}}</span>
-              <el-rate v-model="feed.score/2" disabled :colors="['#8888']" class="rate"></el-rate>
+              <router-link :to="'/people/' + feed.user.name">
+                <span>{{ feed.user.name }}</span> </router-link
+              >&nbsp;
+              <span v-if="feed.cate === 0" style="color:#888">想看</span>
+              <span v-if="feed.cate === 1" style="color:#888">在看</span>
+              <span v-if="feed.cate === 2" style="color:#888">看过</span>
+              <span class="feed-time">{{ feed.time }}</span>
+              <el-rate
+                v-model="feed.score / 2"
+                disabled
+                :colors="['#8888']"
+                class="rate"
+              ></el-rate>
             </div>
           </div>
           <div class="feed-movie">
             <div>
-              <router-link :to="'/movie/'+feed.movie.id">
-                <span>{{feed.movie.title}}</span>
-              </router-link>&nbsp;
-              <span style="color:#888">({{feed.movie.year}})</span>
-              <el-rate v-model="feed.movie.score/2" disabled class="rate"></el-rate>
-              <span class="score">{{feed.movie.score}}</span>
-              <br>
+              <router-link :to="'/movie/' + feed.movie.id">
+                <span>{{ feed.movie.title }}</span> </router-link
+              >&nbsp;
+              <span style="color:#888">({{ feed.movie.year }})</span>
+              <el-rate
+                v-model="feed.movie.score / 2"
+                disabled
+                class="rate"
+              ></el-rate>
+              <span class="score">{{ feed.movie.score }}</span>
+              <br />
             </div>
-            <br>
+            <br />
 
             <div class="movie-img">
-              <router-link :to="'/movie/'+feed.movie.id">
-                <img :src="feed.movie.image">
+              <router-link :to="'/movie/' + feed.movie.id">
+                <img :src="feed.movie.image" />
               </router-link>
             </div>
-            <span v-if="feed.movie.summary">{{feed.movie.summary.slice(0,70)+'...'}}</span>
+            <span v-if="feed.movie.summary">{{
+              feed.movie.summary.slice(0, 70) + "..."
+            }}</span>
             <div class="movie-info">
               <span class="p1">导演:</span>
               <span v-for="item in feed.movie.directors" class="attrs">
-                <router-link :to="'/celebrity/'+item.id">{{item.name}}</router-link>
+                <router-link :to="'/celebrity/' + item.id">{{
+                  item.name
+                }}</router-link>
               </span>
-              <br>
+              <br />
               <span class="p1">主演:</span>
               <span v-for="item in feed.movie.casts" class="attrs">
-                <router-link :to="'/celebrity/'+item.id">{{item.name}}</router-link>/
+                <router-link :to="'/celebrity/' + item.id">{{
+                  item.name
+                }}</router-link
+                >/
               </span>
-              <br>
+              <br />
               <span class="p1">类型:</span>
-              <span v-for="item in feed.movie.genres" class="attrs">{{item}}/</span>
-              <br>
+              <span v-for="item in feed.movie.genres" class="attrs"
+                >{{ item }}/</span
+              >
+              <br />
             </div>
           </div>
         </el-card>
-        <br>
+        <br />
       </div>
     </div>
-    <div class="load-more" v-if="next" v-on:click="fetchFeed(next)">加载更多</div>
+    <div class="load-more" v-if="next" v-on:click="fetchFeed(next)">
+      加载更多
+    </div>
   </div>
 </template>
 
@@ -169,4 +193,3 @@ export default {
   color: @doubanColor;
 }
 </style>
-

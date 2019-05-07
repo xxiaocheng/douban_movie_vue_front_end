@@ -6,25 +6,31 @@
           <div class="subject">
             <div class="mainpic">
               <a>
-                <img :src="peopleInfo.avatar">
+                <img :src="peopleInfo.avatar" />
               </a>
             </div>
             <h1>
-              <span class="username title">{{peopleInfo.name}}</span>
+              <span class="username title">{{ peopleInfo.name }}</span>
             </h1>
-            <p class="signature">{{signature}}</p>
+            <p class="signature">{{ signature }}</p>
           </div>
           <div class="location" v-if="location">
             <i class="material-icons loc-img">location_on</i>
-            <span>{{location}}</span>
+            <span>{{ location }}</span>
           </div>
           <div class="friendship">
             粉丝
-            <router-link :to="'/people/'+username+'/follower'">({{followers}})</router-link>&nbsp;&nbsp;&nbsp;
-            关注
-            <router-link :to="'/people/'+username+'/following'">({{peopleInfo.followings_count}})</router-link>
-            <br>
-            <a @click="follow" v-if="!followHe && loginUser!==peopleInfo.name">
+            <router-link :to="'/people/' + username + '/follower'"
+              >({{ followers }})</router-link
+            >&nbsp;&nbsp;&nbsp; 关注
+            <router-link :to="'/people/' + username + '/following'"
+              >({{ peopleInfo.followings_count }})</router-link
+            >
+            <br />
+            <a
+              @click="follow"
+              v-if="!followHe && loginUser !== peopleInfo.name"
+            >
               <button>关注</button>
             </a>
             <a @click="unfollow" v-if="followHe">
@@ -35,7 +41,7 @@
             <el-select
               v-model="currentRole.role_id"
               placeholder="请选择"
-              v-if="this.$store.state.role==='administrator'"
+              v-if="this.$store.state.role === 'administrator'"
               class="role-options"
             >
               <el-option
@@ -45,24 +51,44 @@
                 :value="role.role_id"
               ></el-option>
             </el-select>
-            <el-button size="medium" @click="setRole()" class="set-role-button">更改权限</el-button>
+            <el-button size="medium" @click="setRole()" class="set-role-button"
+              >更改权限</el-button
+            >
           </div>
         </div>
       </div>
       <div class="people-active">
         <div class="cate">
           <el-tabs type="card" @tab-click="handleClick" v-model="activeName">
-            <el-tab-pane :label="'看过('+collectCount+')'" name="collect">
+            <el-tab-pane :label="'看过(' + collectCount + ')'" name="collect">
               <peopleMovieCard :movies="collectMovies"></peopleMovieCard>
-              <div @click="fetchMore(activeName)" v-if="collectNext" class="load-more">获取更多</div>
+              <div
+                @click="fetchMore(activeName)"
+                v-if="collectNext"
+                class="load-more"
+              >
+                获取更多
+              </div>
             </el-tab-pane>
-            <el-tab-pane :label="'在看('+doCount+')'" name="do">
+            <el-tab-pane :label="'在看(' + doCount + ')'" name="do">
               <peopleMovieCard :movies="doMovies"></peopleMovieCard>
-              <div @click="fetchMore(activeName)" v-if="doNext" class="load-more">获取更多</div>
+              <div
+                @click="fetchMore(activeName)"
+                v-if="doNext"
+                class="load-more"
+              >
+                获取更多
+              </div>
             </el-tab-pane>
-            <el-tab-pane :label="'想看('+wishCount+')'" name="wish">
+            <el-tab-pane :label="'想看(' + wishCount + ')'" name="wish">
               <peopleMovieCard :movies="wishMovies"></peopleMovieCard>
-              <div @click="fetchMore(activeName)" v-if="wishNext" class="load-more">获取更多</div>
+              <div
+                @click="fetchMore(activeName)"
+                v-if="wishNext"
+                class="load-more"
+              >
+                获取更多
+              </div>
             </el-tab-pane>
           </el-tabs>
         </div>

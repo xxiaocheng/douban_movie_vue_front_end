@@ -1,17 +1,21 @@
 <template>
   <div>
-    <div v-for="friend in friendData" v-if="friendData.length!==0">
-      <el-card :body-style="{ padding: '0px' ,height:'60px'}" shadow="hover">
-        <img :src="friend.info.who_avatar" class="avatar">
+    <div v-for="friend in friendData" v-if="friendData.length !== 0">
+      <el-card :body-style="{ padding: '0px', height: '60px' }" shadow="hover">
+        <img :src="friend.info.who_avatar" class="avatar" />
         <div class="friend-content">
-          <router-link :to="'/people/'+friend.info.who_name">{{friend.info.who_name}}&nbsp;&nbsp;</router-link>
+          <router-link :to="'/people/' + friend.info.who_name"
+            >{{ friend.info.who_name }}&nbsp;&nbsp;</router-link
+          >
           <span>关注了你</span>
-          <span class="time">{{friend.time}}</span>
+          <span class="time">{{ friend.time }}</span>
         </div>
       </el-card>
-      <br>
+      <br />
     </div>
-    <div class="load-more" v-if="next" v-on:click="fetchNotifications(next)">加载更多</div>
+    <div class="load-more" v-if="next" v-on:click="fetchNotifications(next)">
+      加载更多
+    </div>
   </div>
 </template>
 
@@ -46,7 +50,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less">
 @import "./../../style/color.less";

@@ -4,7 +4,7 @@
       <span class="title">你关注的......</span>
     </div>
     <div class="feed-content">
-    <hr>
+      <hr />
       <followFeed></followFeed>
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="less">
-.feed-content{
+.feed-content {
   width: 950px;
   margin: 10px auto 0;
 }

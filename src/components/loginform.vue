@@ -1,8 +1,18 @@
 <template>
   <div role="login form">
-    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px">
+    <el-form
+      :model="loginForm"
+      status-icon
+      :rules="rules"
+      ref="loginForm"
+      label-width="100px"
+    >
       <el-form-item label="用户名" prop="username">
-        <el-input type="string" v-model="loginForm.username" autocomplete="off"></el-input>
+        <el-input
+          type="string"
+          v-model="loginForm.username"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="pass">
         <el-input
@@ -13,9 +23,16 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')" :disabled="disableLogin">登陆</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('loginForm')"
+          :disabled="disableLogin"
+          >登陆</el-button
+        >
         <el-button @click="resetForm('loginForm')">重置</el-button>
-        <router-link to="/auth/forget-password" class="forget-password">忘记密码?</router-link>
+        <router-link to="/auth/forget-password" class="forget-password"
+          >忘记密码?</router-link
+        >
       </el-form-item>
     </el-form>
     <el-dialog title="重新发送确认邮件" :visible.sync="ratingFormVisible">
@@ -111,8 +128,9 @@ export default {
           this.$store.commit("changeLogin", true);
           this.$store.commit("setUsername", username);
           this.$store.commit("setToken", response.data.access_token);
-          this.$store.commit('setRole',response.data.role);
-          this.$http.defaults.headers.common["Authorization"] = "bearer " +response.data.access_token;
+          this.$store.commit("setRole", response.data.role);
+          this.$http.defaults.headers.common["Authorization"] =
+            "bearer " + response.data.access_token;
 
           this.$router.push("/");
         })

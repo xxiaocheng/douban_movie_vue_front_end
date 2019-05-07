@@ -3,11 +3,13 @@
     <div class="setting-head">
       <span class="title">管理员</span>
     </div>
-    <br>
+    <br />
     <div class="setting-content">
       <el-tabs tab-position="left" v-model="activeName">
         <el-tab-pane label="添加影视" name="uploadMovie">
-          <uploadMovie v-on:toUploadCelebrityTab="toUploadCelebrityTab"></uploadMovie>
+          <uploadMovie
+            v-on:toUploadCelebrityTab="toUploadCelebrityTab"
+          ></uploadMovie>
         </el-tab-pane>
         <el-tab-pane label="添加影人" name="uploadCelebrity">
           <uploadCelebrity></uploadCelebrity>
@@ -40,6 +42,4 @@ export default {
 };
 </script>
 
-
-<style lang="less">
-</style>
+<style lang="less"></style>

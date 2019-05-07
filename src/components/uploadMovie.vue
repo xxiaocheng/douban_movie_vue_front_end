@@ -20,10 +20,7 @@
         <el-input v-model="movieForm.douban_id"></el-input>
       </el-form-item>
       <el-form-item label="年份" prop="year">
-        <el-select
-          v-model="movieForm.year"
-          placeholder="请选择年份"
-        >
+        <el-select v-model="movieForm.year" placeholder="请选择年份">
           <el-option
             v-for="year in yearOptions"
             :key="year.key"
@@ -32,20 +29,38 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="季数" prop="current_season" v-if="movieForm.subtype==='tv'">
+      <el-form-item
+        label="季数"
+        prop="current_season"
+        v-if="movieForm.subtype === 'tv'"
+      >
         <el-input v-model="movieForm.current_season" type="number"></el-input>
       </el-form-item>
-      <el-form-item label="集数" prop="episodes_count" v-if="movieForm.subtype==='tv'">
-        <el-input v-model="movieForm.episodes_count" type="number" ></el-input>
+      <el-form-item
+        label="集数"
+        prop="episodes_count"
+        v-if="movieForm.subtype === 'tv'"
+      >
+        <el-input v-model="movieForm.episodes_count" type="number"></el-input>
       </el-form-item>
-      <el-form-item label="总季数" prop="seasons_count" v-if="movieForm.subtype==='tv'">
+      <el-form-item
+        label="总季数"
+        prop="seasons_count"
+        v-if="movieForm.subtype === 'tv'"
+      >
         <el-input v-model="movieForm.seasons_count" type="number"></el-input>
       </el-form-item>
       <el-form-item label="标签" prop="genres">
-        <el-input v-model="movieForm.genres" placeholder="多个标签以空格分割"></el-input>
+        <el-input
+          v-model="movieForm.genres"
+          placeholder="多个标签以空格分割"
+        ></el-input>
       </el-form-item>
       <el-form-item label="国家" prop="countries">
-        <el-input v-model="movieForm.countries" placeholder="多个国家以空格分割"></el-input>
+        <el-input
+          v-model="movieForm.countries"
+          placeholder="多个国家以空格分割"
+        ></el-input>
       </el-form-item>
       <el-form-item label="导演" prop="directors">
         <el-select
@@ -65,9 +80,11 @@
             :label="item.label"
             :value="item.id"
           >
-            <img :src="item.image" style="max-height:50px">
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.label }}</span>
-            <br>
+            <img :src="item.image" style="max-height:50px" />
+            <span style="float: right; color: #8492a6; font-size: 13px">{{
+              item.label
+            }}</span>
+            <br />
           </el-option>
         </el-select>
         <el-button type="text" @click="changeTab">没有找到相关导演?</el-button>
@@ -90,9 +107,11 @@
             :label="item.label"
             :value="item.id"
           >
-            <img :src="item.image" style="max-height:50px">
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.label }}</span>
-            <br>
+            <img :src="item.image" style="max-height:50px" />
+            <span style="float: right; color: #8492a6; font-size: 13px">{{
+              item.label
+            }}</span>
+            <br />
           </el-option>
         </el-select>
         <el-button type="text" @click="changeTab">没有找到相关演员?</el-button>
@@ -101,7 +120,10 @@
         <el-input v-model="movieForm.original_title"></el-input>
       </el-form-item>
       <el-form-item label="又名" prop="aka">
-        <el-input v-model="movieForm.aka" placeholder="多个又名以空格分割"></el-input>
+        <el-input
+          v-model="movieForm.aka"
+          placeholder="多个又名以空格分割"
+        ></el-input>
       </el-form-item>
       <el-form-item label="摘要" prop="summary">
         <el-input v-model="movieForm.summary" type="textarea"></el-input>
@@ -116,12 +138,21 @@
           :on-change="handleChange"
           :show-file-list="false"
         >
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2Mb</div>
+          <el-button slot="trigger" size="small" type="primary"
+            >选取文件</el-button
+          >
+          <div slot="tip" class="el-upload__tip">
+            只能上传jpg/png文件，且不超过2Mb
+          </div>
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('movieForm')" v-loading="loading">立即创建</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('movieForm')"
+          v-loading="loading"
+          >立即创建</el-button
+        >
         <el-button @click="resetForm('movieForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -150,9 +181,9 @@ export default {
         genres: "",
         directors: [],
         casts: [],
-        current_season:0,
-        seasons_count:0,
-        episodes_count:0,
+        current_season: 0,
+        seasons_count: 0,
+        episodes_count: 0
       },
       rules: {
         title: [{ required: true, message: "请输入名称", trigger: "blur" }],
@@ -178,8 +209,8 @@ export default {
     generateYears() {
       for (var i = 1900; i <= 2030; i++) {
         this.yearOptions.push({
-          key:i,
-          value:i
+          key: i,
+          value: i
         });
       }
     },
@@ -267,10 +298,10 @@ export default {
       params.append("aka", this.movieForm.aka);
       params.append("directors", directors);
       params.append("casts", casts);
-      if(this.movieForm.subtype==='tv'){
-        params.append('seasons_count',this.movieForm.seasons_count);
-        params.append('episodes_count',this.movieForm.episodes_count);
-        params.append('current_season',this.movieForm.current_season);
+      if (this.movieForm.subtype === "tv") {
+        params.append("seasons_count", this.movieForm.seasons_count);
+        params.append("episodes_count", this.movieForm.episodes_count);
+        params.append("current_season", this.movieForm.current_season);
       }
       this.$http
         .post("/movie", params)
@@ -286,7 +317,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less">
 .movie-form {

@@ -19,7 +19,6 @@
   </div>
 </template>
 
-
 <script>
 import likeNotification from "@/components/likeNotification.vue";
 import friendNotification from "@/components/friendNotification.vue";

@@ -4,15 +4,21 @@
       <div class="movieTag" v-for="movie in moviesItems">
         <ul>
           <li class="film-pic">
-            <router-link v-bind:to="'/movie/'+movie.id">
-              <img class="movieImg" v-bind:src="movie.image" alt>
+            <router-link v-bind:to="'/movie/' + movie.id">
+              <img class="movieImg" v-bind:src="movie.image" alt />
             </router-link>
           </li>
           <li class="film-name">
-            <router-link v-bind:to="'/movie/'+movie.id">{{movie.title}}</router-link>
+            <router-link v-bind:to="'/movie/' + movie.id">{{
+              movie.title
+            }}</router-link>
           </li>
           <li class="film-rate">
-            <el-rate v-model="movie.score/2" disabled text-color="#ff9900"></el-rate>
+            <el-rate
+              v-model="movie.score / 2"
+              disabled
+              text-color="#ff9900"
+            ></el-rate>
           </li>
           <li class="film-button"></li>
         </ul>
@@ -62,8 +68,6 @@ export default {
   }
 };
 </script>
-
-
 
 <style rel="stylesheet/less" lang="less">
 @import "../../style/color";

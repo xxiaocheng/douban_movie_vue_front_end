@@ -9,10 +9,9 @@
 import myNavbar from "@/components/navbar.vue";
 
 export default {
-  name:'navbar',
-  components:{
+  name: "navbar",
+  components: {
     myNavbar
-  }  
-}
+  }
+};
 </script>
-

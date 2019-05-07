@@ -2,7 +2,8 @@
   <div class="change-email">
     <div>
       <span class="label">邮箱:</span>
-      <span>{{currentEmail}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <span>{{ currentEmail }}</span
+      >&nbsp;&nbsp;&nbsp;&nbsp;
       <a @click="changeEmail">更改邮箱</a>
     </div>
   </div>
@@ -63,5 +64,3 @@ export default {
   }
 }
 </style>
-
-

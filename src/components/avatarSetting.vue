@@ -14,11 +14,13 @@
             :show-file-list="false"
             :on-change="changeUpload"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <div v-else>
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖拽到此处即可</div>
-              <div class="el-upload__tip">支持 PNG/JPEG/JPG 图片格式，单张图片最大支持2MB</div>
+              <div class="el-upload__tip">
+                支持 PNG/JPEG/JPG 图片格式，单张图片最大支持2MB
+              </div>
             </div>
           </el-upload>
         </div>
@@ -48,7 +50,9 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="finish" :loading="loading">上传</el-button>
+        <el-button type="primary" @click="finish" :loading="loading"
+          >上传</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -112,25 +116,25 @@ export default {
         var newPicUrl = URL.createObjectURL(data);
         this.imageUrl = newPicUrl;
         var file = new File([data], this.fileName);
-        this.uploadAvatar(this.fileinfo.raw,file);
+        this.uploadAvatar(this.fileinfo.raw, file);
       });
       this.dialogVisible = false;
     },
-    uploadAvatar(raw_file,crop_file) {
+    uploadAvatar(raw_file, crop_file) {
       this.loading = true;
       var params = new FormData();
       params.append("raw_file", raw_file);
-      params.append('l_file',crop_file);
+      params.append("l_file", crop_file);
       this.$http
         .post("/user/upload-avatar", params)
         .then(response => {
           this.loading = false;
-          this.$message.success('更换头像成功');
+          this.$message.success("更换头像成功");
         })
         .catch(error => {
           this.loading = false;
           console.log("upload error");
-          this.$message.error('不小心失败啦');
+          this.$message.error("不小心失败啦");
         });
     }
   }

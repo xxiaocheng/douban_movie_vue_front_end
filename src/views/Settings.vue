@@ -3,17 +3,17 @@
     <div class="setting-head">
       <span class="title">用户设置</span>
     </div>
-    <br>
+    <br />
     <div class="setting-content">
       <el-tabs tab-position="left" style="height: 400px;">
         <el-tab-pane label="基本信息">
-            <profileSetting></profileSetting>
+          <profileSetting></profileSetting>
         </el-tab-pane>
         <el-tab-pane label="更改头像">
-            <avatarSetting></avatarSetting>
+          <avatarSetting></avatarSetting>
         </el-tab-pane>
         <el-tab-pane label="修改密码">
-            <changePassword></changePassword>
+          <changePassword></changePassword>
         </el-tab-pane>
         <el-tab-pane label="修改邮箱">
           <changeEmail></changeEmail>
@@ -35,7 +35,11 @@ import deleteAccount from "@/components/deleteAccount.vue";
 
 export default {
   components: {
-    avatarSetting,profileSetting,changePassword,changeEmail,deleteAccount
+    avatarSetting,
+    profileSetting,
+    changePassword,
+    changeEmail,
+    deleteAccount
   },
   data() {
     return {};
@@ -51,9 +55,8 @@ export default {
 .setting-content {
   width: 1200px;
   margin: 30px auto;
-  .el-tabs__item{
-      font-size: 17px;
+  .el-tabs__item {
+    font-size: 17px;
   }
 }
 </style>
-

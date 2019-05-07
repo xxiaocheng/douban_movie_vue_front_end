@@ -1,33 +1,45 @@
 <template>
   <div v-loading="loading">
-    <div class="movie" v-for="(rating,index) in ratings" v-if="ratings">
-      <el-card :body-style="{ padding: '0px',}" shadow="hover">
-        <img :src="rating.movie.image" class="image">
+    <div class="movie" v-for="(rating, index) in ratings" v-if="ratings">
+      <el-card :body-style="{ padding: '0px' }" shadow="hover">
+        <img :src="rating.movie.image" class="image" />
         <div class="content">
-          <span class="movie-title">{{rating.movie.title}}</span>
-          <span class="movie-year">{{rating.movie.year}}</span>
-          <br>
-          <br>
-          <el-rate v-model="rating.score/2" disabled text-color="#ff9900" score-template="{value}"></el-rate>
-          <span v-if="rating.tags.length!==0">
+          <span class="movie-title">{{ rating.movie.title }}</span>
+          <span class="movie-year">{{ rating.movie.year }}</span>
+          <br />
+          <br />
+          <el-rate
+            v-model="rating.score / 2"
+            disabled
+            text-color="#ff9900"
+            score-template="{value}"
+          ></el-rate>
+          <span v-if="rating.tags.length !== 0">
             标签:&nbsp;&nbsp;
-            <small v-for="tag in rating.tags">{{tag+' '}}</small>
+            <small v-for="tag in rating.tags">{{ tag + " " }}</small>
           </span>
-          <br>
+          <br />
           <span v-if="rating.comment">
             评价:&nbsp;&nbsp;
-            <small>{{rating.comment}}</small>
+            <small>{{ rating.comment }}</small>
           </span>
-          <br>
-          <small class="time">{{rating.time}}</small>
+          <br />
+          <small class="time">{{ rating.time }}</small>
         </div>
         <div>
-          <el-button type="danger" class="delete-button" @click="openConfirm(index)">删除评价</el-button>
+          <el-button
+            type="danger"
+            class="delete-button"
+            @click="openConfirm(index)"
+            >删除评价</el-button
+          >
         </div>
       </el-card>
-      <br>
+      <br />
     </div>
-    <div class="load-more" v-if="next" v-on:click="fetchReportRatings(next)">加载更多</div>
+    <div class="load-more" v-if="next" v-on:click="fetchReportRatings(next)">
+      加载更多
+    </div>
   </div>
 </template>
 

@@ -9,16 +9,29 @@
       class="change-password-form"
     >
       <el-form-item label="旧密码" prop="oldPass">
-        <el-input v-model="changePassForm.oldPass" autocomplete="off"></el-input>
+        <el-input
+          v-model="changePassForm.oldPass"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="新密码" prop="pass">
-        <el-input type="password" v-model="changePassForm.pass" autocomplete="off"></el-input>
+        <el-input
+          type="password"
+          v-model="changePassForm.pass"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="再次确认" prop="checkPass">
-        <el-input type="password" v-model="changePassForm.checkPass" autocomplete="off"></el-input>
+        <el-input
+          type="password"
+          v-model="changePassForm.checkPass"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('changePassForm')">保存修改</el-button>
+        <el-button type="primary" @click="submitForm('changePassForm')"
+          >保存修改</el-button
+        >
         <el-button @click="resetForm('changePassForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -73,7 +86,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-            this.modifyPass();
+          this.modifyPass();
           console.log("ok");
         } else {
           console.log("error submit");
@@ -84,27 +97,26 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    modifyPass(){
-        const params =new URLSearchParams();
-        params.append('oldpassword',this.changePassForm.oldPass);
-        params.append('newpassword',this.changePassForm.pass);
-        params.append('newpassword2',this.changePassForm.checkPass);
-        this.$http.post('/auth/change-password',
-        params
-        )
-        .then(response=>{
-            this.$message.success(response.data.message);
+    modifyPass() {
+      const params = new URLSearchParams();
+      params.append("oldpassword", this.changePassForm.oldPass);
+      params.append("newpassword", this.changePassForm.pass);
+      params.append("newpassword2", this.changePassForm.checkPass);
+      this.$http
+        .post("/auth/change-password", params)
+        .then(response => {
+          this.$message.success(response.data.message);
         })
-        .catch(error=>{
-            this.$message.error(error.response.data.message);
-        })
+        .catch(error => {
+          this.$message.error(error.response.data.message);
+        });
     }
   }
 };
 </script>
 
 <style lang="less">
-.change-password-form{
-    width: 400px;
+.change-password-form {
+  width: 400px;
 }
 </style>

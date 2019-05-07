@@ -1,74 +1,113 @@
 <template>
-  <div class="container-moving" v-loading="this.$store.state.movieDetailLoading">
+  <div
+    class="container-moving"
+    v-loading="this.$store.state.movieDetailLoading"
+  >
     <div class="content">
       <h1>
-        <span class="title">{{movieDetail.title}}</span>
-        <span class="year">({{movieDetail.year}})</span>
+        <span class="title">{{ movieDetail.title }}</span>
+        <span class="year">({{ movieDetail.year }})</span>
       </h1>
       <div class="detail clearfix">
         <div class="left-side">
           <div class="actor-list">
             <div class="subject">
               <div class="mainpic">
-                <img class="movieImg" :src="movieDetail.image" alt>
+                <img class="movieImg" :src="movieDetail.image" alt />
               </div>
               <div class="info">
                 <span class="p1">导演:</span>
                 <span v-for="item in movieDetail.directors" class="attrs">
-                  <router-link :to="'/celebrity/'+item.id">{{item.name}}</router-link>
+                  <router-link :to="'/celebrity/' + item.id">{{
+                    item.name
+                  }}</router-link>
                 </span>
-                <br>
+                <br />
                 <span class="p1">主演:</span>
                 <span v-for="item in movieDetail.casts" class="attrs">
-                  <router-link :to="'/celebrity/'+item.id">{{item.name}}</router-link>/
+                  <router-link :to="'/celebrity/' + item.id">{{
+                    item.name
+                  }}</router-link
+                  >/
                 </span>
-                <br>
+                <br />
                 <span class="p1">类型:</span>
-                <span v-for="item in movieDetail.genres" class="attrs">{{item}}/</span>
-                <br>
+                <span v-for="item in movieDetail.genres" class="attrs"
+                  >{{ item }}/</span
+                >
+                <br />
                 <span class="p1">制片国家/地区:</span>
-                <span v-for="(item,index) in movieDetail.countries" class="attrs">{{item}}</span>
-                <br>
+                <span
+                  v-for="(item, index) in movieDetail.countries"
+                  class="attrs"
+                  >{{ item }}</span
+                >
+                <br />
                 <span class="p1">又名:</span>
-                <span v-for="item in movieDetail.aka" class="attrs">{{item}}</span>
-                <br>
+                <span v-for="item in movieDetail.aka" class="attrs">{{
+                  item
+                }}</span>
+                <br />
                 <span class="p1" v-if="movieDetail.seasons_count">总季数:</span>
-                <span v-if="movieDetail.seasons_count">{{movieDetail.seasons_count}}</span>
-                <br v-if="movieDetail.seasons_count">
+                <span v-if="movieDetail.seasons_count">{{
+                  movieDetail.seasons_count
+                }}</span>
+                <br v-if="movieDetail.seasons_count" />
                 <span class="p1" v-if="movieDetail.episodes_count">集数:</span>
-                <span v-if="movieDetail.episodes_count">{{movieDetail.episodes_count}}</span>
-                <br v-if="movieDetail.episodes_count">
+                <span v-if="movieDetail.episodes_count">{{
+                  movieDetail.episodes_count
+                }}</span>
+                <br v-if="movieDetail.episodes_count" />
                 <span class="p1" v-if="movieDetail.current_season">季数:</span>
-                <span v-if="movieDetail.current_season">{{movieDetail.current_season}}</span>
-                <br v-if="movieDetail.current_season">
+                <span v-if="movieDetail.current_season">{{
+                  movieDetail.current_season
+                }}</span>
+                <br v-if="movieDetail.current_season" />
                 <span class="p1" v-if="movieDetail.douban_id">豆瓣链接:</span>
                 <span>
                   <a
-                    :href="'https://movie.douban.com/subject/'+movieDetail.douban_id"
+                    :href="
+                      'https://movie.douban.com/subject/' +
+                        movieDetail.douban_id
+                    "
                     target="_blank"
-                  >{{movieDetail.douban_id}}</a>
+                    >{{ movieDetail.douban_id }}</a
+                  >
                 </span>
-                <br v-if="movieDetail.douban_id">
+                <br v-if="movieDetail.douban_id" />
               </div>
             </div>
             <div class="people-sroce">
               <div>
                 <p>豆瓣评分</p>
-                <span class="score" v-if="movieDetail.score/2">{{movieDetail.score}}</span>
-                <el-rate v-model="movieDetail.score/2" disabled text-color="#ff9900"></el-rate>
-                <p class="comment-num" v-if="movieDetail.score">{{movieDetail.rating_count}}人评价</p>
+                <span class="score" v-if="movieDetail.score / 2">{{
+                  movieDetail.score
+                }}</span>
+                <el-rate
+                  v-model="movieDetail.score / 2"
+                  disabled
+                  text-color="#ff9900"
+                ></el-rate>
+                <p class="comment-num" v-if="movieDetail.score">
+                  {{ movieDetail.rating_count }}人评价
+                </p>
               </div>
             </div>
             <div>
-              <el-button type="danger" @click="deleteMovieConfirm" v-if="this.$store.state.role!=='user'">删除这个电影</el-button>
+              <el-button
+                type="danger"
+                @click="deleteMovieConfirm"
+                v-if="this.$store.state.role !== 'user'"
+                >删除这个电影</el-button
+              >
             </div>
           </div>
           <div class="insterest-people">
-            <div class="top" v-if="me2movie.cate===-1">
+            <div class="top" v-if="me2movie.cate === -1">
               <a @click="wishRating()">
                 <button>想看</button>
               </a>
-              <a @click="doRating()" v-if="movieDetail.subtype ==='tv'">
+              <a @click="doRating()" v-if="movieDetail.subtype === 'tv'">
                 <button>在看</button>
               </a>
               <a @click="collectRating()">
@@ -79,54 +118,63 @@
                 <el-rate
                   v-model="score"
                   show-text
-                  :texts="['很差','较差','还行','推荐','力荐']"
+                  :texts="['很差', '较差', '还行', '推荐', '力荐']"
                   :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
                   @change="collectRating"
                 ></el-rate>
               </span>
             </div>
-            <div class="top" v-if="me2movie.cate!==-1">
-              <span class="stitle" v-if="me2movie.cate===2">
+            <div class="top" v-if="me2movie.cate !== -1">
+              <span class="stitle" v-if="me2movie.cate === 2">
                 我
-                <small>{{me2movie.time}}</small> 看过
+                <small>{{ me2movie.time }}</small> 看过
               </span>
-              <span class="stitle" v-if="me2movie.cate===1">
+              <span class="stitle" v-if="me2movie.cate === 1">
                 我
-                <small>{{me2movie.time}}</small> 在看
+                <small>{{ me2movie.time }}</small> 在看
               </span>
-              <span class="stitle" v-if="me2movie.cate===0">
+              <span class="stitle" v-if="me2movie.cate === 0">
                 我
-                <small>{{me2movie.time}}</small> 想看
+                <small>{{ me2movie.time }}</small> 想看
               </span>
-              <br>
+              <br />
               <span class="score-to">
                 我的评价:
                 <el-rate
-                  v-model="me2movie.score/2"
+                  v-model="me2movie.score / 2"
                   disabled
                   text-color="#ff9900"
                   score-template="{value}"
                 ></el-rate>
               </span>
               <a @click="deleteRating()">删除</a>
-              <br>
-              <span v-if="JSON.stringify(me2movie.tags) !=='[]' ">
+              <br />
+              <span v-if="JSON.stringify(me2movie.tags) !== '[]'">
                 标签:
-                <small v-for=" tag in me2movie.tags">{{tag+' '}}</small>
+                <small v-for="tag in me2movie.tags">{{ tag + " " }}</small>
               </span>
-              <br>
+              <br />
               <span v-if="me2movie.comment">
                 评价:
-                <small>{{me2movie.comment}}</small>
+                <small>{{ me2movie.comment }}</small>
               </span>
             </div>
           </div>
           <div class="gtleft"></div>
           <div class="summary">
-            <p class="summary-title">{{movieDetail.title}}的剧情简介 · · · · · ·</p>
-            <p class="intro">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{movieDetail.summary}}</p>
+            <p class="summary-title">
+              {{ movieDetail.title }}的剧情简介 · · · · · ·
+            </p>
+            <p class="intro">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                movieDetail.summary
+              }}
+            </p>
           </div>
-          <movieComment :movieId="this.movieDetail.id" :title="movieDetail.title"></movieComment>
+          <movieComment
+            :movieId="this.movieDetail.id"
+            :title="movieDetail.title"
+          ></movieComment>
         </div>
       </div>
     </div>
@@ -135,17 +183,27 @@
       <el-rate
         v-model="score"
         show-text
-        :texts="['很差','较差','还行','推荐','力荐']"
+        :texts="['很差', '较差', '还行', '推荐', '力荐']"
         :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
       ></el-rate>
-      <br>标签:
-      <br>
-      <el-input v-model="tags" placeholder="多个标签用空格分隔" class type="text"></el-input>
+      <br />标签:
+      <br />
+      <el-input
+        v-model="tags"
+        placeholder="多个标签用空格分隔"
+        class
+        type="text"
+      ></el-input>
 
       <!-- <input class="input" type="text" placeholder="多个标签用空格分隔" v-model='tags'><br> -->
       评论:
-      <br>
-      <el-input type="textarea" autosize placeholder="请输入评论 ·  ·  · " v-model="comment"></el-input>
+      <br />
+      <el-input
+        type="textarea"
+        autosize
+        placeholder="请输入评论 ·  ·  · "
+        v-model="comment"
+      ></el-input>
       <!-- <input class="input" type="text" placeholder="输入评论 ·  ·  · " v-model='comment'><br> -->
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelRating()">取 消</el-button>

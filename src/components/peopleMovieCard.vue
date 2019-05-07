@@ -2,33 +2,37 @@
   <div>
     <div class="movie" v-for="movie in movies" v-if="movies">
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
-        <router-link :to="'/movie/'+movie.movie.id">
-          <img :src="movie.movie.image" class="image">
+        <router-link :to="'/movie/' + movie.movie.id">
+          <img :src="movie.movie.image" class="image" />
           <div class="content">
-            <span class="movie-title">{{movie.movie.title}}</span>
-            <span class="movie-year">{{movie.movie.year}}</span>
-            <br>
-            <br>
-            <el-rate v-model="movie.score/2" disabled text-color="#ff9900" score-template="{value}"></el-rate>
-            <span v-if="movie.tags.length!==0">
+            <span class="movie-title">{{ movie.movie.title }}</span>
+            <span class="movie-year">{{ movie.movie.year }}</span>
+            <br />
+            <br />
+            <el-rate
+              v-model="movie.score / 2"
+              disabled
+              text-color="#ff9900"
+              score-template="{value}"
+            ></el-rate>
+            <span v-if="movie.tags.length !== 0">
               标签:&nbsp;&nbsp;
-              <small v-for="tag in movie.tags">{{tag+' '}}</small>
+              <small v-for="tag in movie.tags">{{ tag + " " }}</small>
             </span>
-            <br>
+            <br />
             <span v-if="movie.comment">
               评价:&nbsp;&nbsp;
-              <small>{{movie.comment}}</small>
+              <small>{{ movie.comment }}</small>
             </span>
-            <br>
-            <small class="time">{{movie.time}}</small>
+            <br />
+            <small class="time">{{ movie.time }}</small>
           </div>
         </router-link>
       </el-card>
-      <br>
+      <br />
     </div>
   </div>
 </template>
-
 
 <script>
 export default {

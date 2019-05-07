@@ -26,10 +26,16 @@
         <el-input v-model="celebrityForm.born_place"></el-input>
       </el-form-item>
       <el-form-item label="又名" prop="aka">
-        <el-input v-model="celebrityForm.aka" placeholder="多个又名以空格分割"></el-input>
+        <el-input
+          v-model="celebrityForm.aka"
+          placeholder="多个又名以空格分割"
+        ></el-input>
       </el-form-item>
       <el-form-item label="外文名" prop="aka_en">
-        <el-input v-model="celebrityForm.aka_en" placeholder="多个外文名以空格分割"></el-input>
+        <el-input
+          v-model="celebrityForm.aka_en"
+          placeholder="多个外文名以空格分割"
+        ></el-input>
       </el-form-item>
       <el-form-item label="头像" prop="avatar">
         <el-upload
@@ -41,18 +47,26 @@
           :on-change="handleChange"
           :show-file-list="false"
         >
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2Mb</div>
+          <el-button slot="trigger" size="small" type="primary"
+            >选取文件</el-button
+          >
+          <div slot="tip" class="el-upload__tip">
+            只能上传jpg/png文件，且不超过2Mb
+          </div>
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('celebrityForm')" v-loading="loading">立即创建</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('celebrityForm')"
+          v-loading="loading"
+          >立即创建</el-button
+        >
         <el-button @click="resetForm('celebrityForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -91,7 +105,7 @@ export default {
         this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
         return false;
       }
-      this.$message.success('添加头像成功');
+      this.$message.success("添加头像成功");
       this.celebrityForm.avatar = file;
     },
     resetForm(formName) {
@@ -100,11 +114,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-            if(!this.celebrityForm.avatar){
-                this.$message.error('请添加头像');
-                return false;
-            }
-            this.uploadCelebrity();
+          if (!this.celebrityForm.avatar) {
+            this.$message.error("请添加头像");
+            return false;
+          }
+          this.uploadCelebrity();
         } else {
           console.log("error submit!!");
           return false;
@@ -142,4 +156,3 @@ export default {
   max-width: 500px;
 }
 </style>
-

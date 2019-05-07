@@ -1,18 +1,24 @@
 <template>
   <div>
-    <div v-for="like in likeData" v-if="likeData.length!==0">
-      <el-card :body-style="{ padding: '0px' ,height:'60px'}" shadow="hover">
-        <img :src="like.info.who_avatar" class="avatar">
+    <div v-for="like in likeData" v-if="likeData.length !== 0">
+      <el-card :body-style="{ padding: '0px', height: '60px' }" shadow="hover">
+        <img :src="like.info.who_avatar" class="avatar" />
         <div class="like-content">
-          <router-link :to="'/people/'+like.info.who_name">{{like.info.who_name}}&nbsp;&nbsp;</router-link>点赞了你在&nbsp;&nbsp;
-          <router-link :to="'/movie/'+like.info.movie_id">{{like.info.movie_title}}&nbsp;&nbsp;</router-link>
+          <router-link :to="'/people/' + like.info.who_name"
+            >{{ like.info.who_name }}&nbsp;&nbsp;</router-link
+          >点赞了你在&nbsp;&nbsp;
+          <router-link :to="'/movie/' + like.info.movie_id"
+            >{{ like.info.movie_title }}&nbsp;&nbsp;</router-link
+          >
           <span>下的评价</span>
-          <span class="time">{{like.time}}</span>
+          <span class="time">{{ like.time }}</span>
         </div>
       </el-card>
-      <br>
+      <br />
     </div>
-    <div class="load-more" v-if="next" v-on:click="fetchNotifications(next)">加载更多</div>
+    <div class="load-more" v-if="next" v-on:click="fetchNotifications(next)">
+      加载更多
+    </div>
   </div>
 </template>
 
@@ -47,7 +53,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less">
 @import "./../../style/color.less";

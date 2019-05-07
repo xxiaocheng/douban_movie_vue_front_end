@@ -3,18 +3,17 @@
     <div class="delete-account">
       <p>删除账号后您的账号不可恢复</p>
       <p>您的私有数据将被永远删除</p>
-      <br>
+      <br />
       <a @click="open">是否仍要注销</a>
     </div>
   </div>
 </template>
 
-
 <script>
 export default {
   data() {
     return {
-        password:''
+      password: ""
     };
   },
   methods: {
@@ -24,10 +23,10 @@ export default {
         cancelButtonText: "取消",
         inputPattern: /^[\s\S]*.*[^\s][\s\S]*$/,
         inputErrorMessage: "密码不能为空!",
-        inputType:'password'
+        inputType: "password"
       })
         .then(({ value }) => {
-            this.password=value;
+          this.password = value;
           this.$confirm("此操作将永久删除账号, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",

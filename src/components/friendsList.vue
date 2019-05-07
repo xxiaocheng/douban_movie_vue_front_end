@@ -4,20 +4,20 @@
       <el-card shadow="hover" :body-style="{ padding: '0px' }">
         <div class="avatar">
           <router-link :to="getProfileUrl(user.name)">
-            <img :src="user.avatar"  >
+            <img :src="user.avatar" />
           </router-link>
         </div>
         <div class="content">
           <router-link :to="getProfileUrl(user.name)">
-            <span class="username">{{user.name}}</span>
+            <span class="username">{{ user.name }}</span>
           </router-link>
-          <br>
+          <br />
           <div class="signature">
-            <span>{{user.signature}}</span>
+            <span>{{ user.signature }}</span>
           </div>
         </div>
       </el-card>
-      <hr>
+      <hr />
     </div>
   </div>
 </template>
