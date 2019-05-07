@@ -3,7 +3,7 @@
     <div v-for="sys in systemData" v-if="systemData.length!==0">
       <el-card :body-style="{ padding: '0px' ,height:'60px'}" shadow="hover">
         <div class="sys-content">
-          <span>{{sys.info}}</span>
+          <span>{{sys.info.info}}</span>
           <span class="time">{{sys.time}}</span>
         </div>
       </el-card>

@@ -45,7 +45,7 @@
                 :value="role.role_id"
               ></el-option>
             </el-select>
-            <el-button  size="medium" @click="setRole()" class="set-role-button">更改权限</el-button>
+            <el-button size="medium" @click="setRole()" class="set-role-button">更改权限</el-button>
           </div>
         </div>
       </div>
@@ -142,7 +142,7 @@ export default {
     },
     setRole() {
       const params = new URLSearchParams();
-      params.append("role_id",this.currentRole.role_id);
+      params.append("role_id", this.currentRole.role_id);
       this.$http
         .post("/user/" + this.username + "/role", params)
         .then(response => {
@@ -271,10 +271,9 @@ export default {
         .catch(error => {
           console.log("get user detail error");
           // go to 404 page
-          if (error.status === 404) {
-            this.loadingUserInfo = false;
-            this.$router.push("/");
-          }
+          this.loadingUserInfo = false;
+          this.$router.push("/");
+          this.$message.error("未找到相关信息");
           this.loadingUserInfo = false;
           this.error = true;
         });
@@ -385,7 +384,7 @@ export default {
           display: inline;
           .role-options {
           }
-          .set-role-button{
+          .set-role-button {
             padding: 8px;
           }
         }

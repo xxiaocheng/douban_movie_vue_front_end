@@ -71,7 +71,13 @@
               :fetch-suggestions="querySearchAsync"
               placeholder="请输入搜索内容"
               @select="handleSelect"
-            ></el-autocomplete>
+            >
+              <template slot-scope="{ item }">
+                <img :src="item.image" style="max-width:30px">&nbsp;&nbsp;
+                <!-- <div class="name">{{ item.value }}</div> -->
+                <span class="addr">{{ item.value }}</span>
+              </template>
+            </el-autocomplete>
             <!-- <el-button type="primary" icon="el-icon-search">搜索</el-button> -->
           </div>
         </div>
@@ -181,14 +187,24 @@ export default {
             for (var i = 0; i < response.data.items.length; i++) {
               suggestions.push({
                 value: response.data.items[i].title,
-                id: response.data.items[i].id
+                id: response.data.items[i].id,
+                image: response.data.items[i].image
+              });
+            }
+          } else if (this.queryCate === "celebrity") {
+            for (var i = 0; i < response.data.items.length; i++) {
+              suggestions.push({
+                value: response.data.items[i].name,
+                id: response.data.items[i].id,
+                image: response.data.items[i].image
               });
             }
           } else {
             for (var i = 0; i < response.data.items.length; i++) {
               suggestions.push({
                 value: response.data.items[i].name,
-                id: response.data.items[i].id
+                id: response.data.items[i].id,
+                image: response.data.items[i].avatar
               });
             }
           }
@@ -217,8 +233,9 @@ export default {
       this.$store.commit("changeLogin", false);
     }
   },
-  created() {
-    var isLogin = this.$store.state.isLogin;
+  mounted() {
+    this.isLogin = this.$store.state.isLogin;
+    console.log(11);
     if (this.isLogin) {
       this.getMessageCount();
     }

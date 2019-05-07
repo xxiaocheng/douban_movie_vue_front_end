@@ -89,6 +89,7 @@ export default new Router({
     {
       path: "/celebrity/:celebrityid",
       name: "celebrity",
+      props: true,
       component: Celebrity,
       meta: {
         requiresAuth: true
@@ -118,6 +119,7 @@ export default new Router({
     {
       path: "/movie/:movieid",
       name: "moviePage",
+      props: true,
       component: Movie,
       meta: {
         requiresAuth: true

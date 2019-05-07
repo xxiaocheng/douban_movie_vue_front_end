@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="setting-avatar">
-      <div class="avatar">
+      <div class="avatar-upload">
         <!-- <div class="account-form-avatar">
           <img src="http://localhost:5000/api/v1/photo/avatar/chengxiao_l.png" class="avatar-img">
         </div> -->
@@ -147,7 +147,7 @@ export default {
 .setting-avatar {
   width: 800px;
   margin: 10px auto 0;
-  .avatar {
+  .avatar-upload {
     margin-bottom: 20px;
     position: relative;
     .account-form-label {
