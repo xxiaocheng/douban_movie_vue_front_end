@@ -62,17 +62,16 @@ export default {
         return callback(new Error("用户名不符合要求"));
       }
       this.$http
-        .get("/user/validate", {
+        .get("/user/test/username", {
           params: {
-            type_name: "username",
             value: value
           }
         })
         .then(response => {
-          callback();
+          callback(new Error("用户名已存在"));
         })
         .catch(error => {
-          callback(new Error("用户名已存在"));
+          callback();
         });
     };
     var validateEmail = (rule, value, callback) => {
@@ -85,17 +84,16 @@ export default {
         return callback(new Error("邮箱不符合要求"));
       }
       this.$http
-        .get("/user/validate", {
+        .get("/user/test/email", {
           params: {
-            type_name: "email",
             value: value
           }
         })
         .then(response => {
-          callback();
+          callback(new Error("邮箱已被注册"));
         })
         .catch(error => {
-          callback(new Error("邮箱已被注册"));
+          callback();
         });
     };
     var validatePass = (rule, value, callback) => {
@@ -166,7 +164,7 @@ export default {
       params.append("email", email);
       params.append("password", password);
       this.$http
-        .post("/user", params)
+        .post("/users", params)
         .then(response => {
           console.log("ok");
           this.showSucceedMess(response.data.username);

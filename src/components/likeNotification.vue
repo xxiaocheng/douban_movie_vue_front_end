@@ -1,17 +1,17 @@
 <template>
   <div>
     <div v-for="like in likeData" v-if="likeData.length !== 0">
-      <el-card :body-style="{ padding: '0px', height: '60px' }" shadow="hover">
-        <img :src="like.info.who_avatar" class="avatar" />
+      <el-card :body-style="{ padding: '0px', height: '60px' }" shadow="hover" v-if="like.movie">
+        <img :src="like.send_user.avatar_image" class="avatar" />
         <div class="like-content">
-          <router-link :to="'/people/' + like.info.who_name"
-            >{{ like.info.who_name }}&nbsp;&nbsp;</router-link
+          <router-link :to="'/people/' + like.send_user.username"
+            >{{ like.send_user.username }}&nbsp;&nbsp;</router-link
           >点赞了你在&nbsp;&nbsp;
-          <router-link :to="'/movie/' + like.info.movie_id"
-            >{{ like.info.movie_title }}&nbsp;&nbsp;</router-link
+          <router-link :to="'/movie/' + like.movie.id"
+            >{{ like.movie.title }}&nbsp;&nbsp;</router-link
           >
           <span>下的评价</span>
-          <span class="time">{{ like.time }}</span>
+          <span class="time">{{ like.when }}</span>
         </div>
       </el-card>
       <br />
@@ -40,8 +40,8 @@ export default {
       this.$http
         .get(url)
         .then(response => {
-          this.likeData = this.likeData.concat(response.data.items);
-          this.next = response.data.next;
+          this.likeData = this.likeData.concat(response.data.data.items);
+          this.next = response.data.data.next;
         })
         .catch(error => {
           console.log("fetch like data error.");

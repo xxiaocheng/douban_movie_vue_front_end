@@ -16,6 +16,13 @@
           <el-option label="电视剧" value="tv"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="院线状态" prop="subtype" v-if="movieForm.subtype === 'movie'">
+        <el-select v-model="movieForm.cinema_status" placeholder="请选择">
+          <el-option label="结束上映" value="0"></el-option>
+          <el-option label="正在上映" value="1"></el-option>
+          <el-option label="即将上映" value="2"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="豆瓣ID" prop="douban_id">
         <el-input v-model="movieForm.douban_id"></el-input>
       </el-form-item>
@@ -171,6 +178,7 @@ export default {
       movieForm: {
         title: "",
         subtype: "movie",
+        cinema_status:0,
         douban_id: "",
         year: 2019,
         image: "",
@@ -231,11 +239,11 @@ export default {
             }
           })
           .then(response => {
-            for (var i = 0; i < response.data.items.length; i++) {
+            for (var i = 0; i < response.data.data.items.length; i++) {
               this.directorsOptions.push({
-                label: response.data.items[i].name,
-                id: response.data.items[i].id,
-                image: response.data.items[i].image
+                label: response.data.data.items[i].name,
+                id: response.data.data.items[i].id,
+                image: response.data.data.items[i].avatar_url
               });
             }
           })
@@ -292,12 +300,12 @@ export default {
       params.append("year", this.movieForm.year);
       params.append("image", this.movieForm.image.raw);
       params.append("countries", this.movieForm.countries);
-      params.append("genres", this.movieForm.genres);
+      params.append("genres_name", this.movieForm.genres);
       params.append("original_title", this.movieForm.original_title);
       params.append("summary", this.movieForm.summary);
       params.append("aka", this.movieForm.aka);
-      params.append("directors", directors);
-      params.append("casts", casts);
+      params.append("director_ids", directors);
+      params.append("celebrities_ids", casts);
       if (this.movieForm.subtype === "tv") {
         params.append("seasons_count", this.movieForm.seasons_count);
         params.append("episodes_count", this.movieForm.episodes_count);

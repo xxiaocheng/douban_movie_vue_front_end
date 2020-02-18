@@ -108,13 +108,13 @@ export default {
         .get(url)
         .then(response => {
           if (friendsType === "follower") {
-            this.followerNext = response.data.next;
-            this.followerData = this.followerData.concat(response.data.items);
-            this.followerCount = response.data.count;
+            this.followerNext = response.data.data.next;
+            this.followerData = this.followerData.concat(response.data.data.items);
+            this.followerCount = response.data.data.total;
           } else if (friendsType === "following") {
-            this.followingnext = response.data.next;
-            this.followingData = this.followingData.concat(response.data.items);
-            this.followingCount = response.data.count;
+            this.followingnext = response.data.data.next;
+            this.followingData = this.followingData.concat(response.data.data.items);
+            this.followingCount = response.data.data.total;
           }
           this.loading = false;
         })

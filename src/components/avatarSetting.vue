@@ -112,7 +112,7 @@ export default {
     },
     finish() {
       this.$refs.cropper.getCropBlob(data => {
-        var fileName = "goods" + this.fileinfo.uid;
+        var fileName = this.fileinfo.uid;
         var newPicUrl = URL.createObjectURL(data);
         this.imageUrl = newPicUrl;
         var file = new File([data], this.fileName);
@@ -123,10 +123,10 @@ export default {
     uploadAvatar(raw_file, crop_file) {
       this.loading = true;
       var params = new FormData();
-      params.append("raw_file", raw_file);
-      params.append("l_file", crop_file);
+      // params.append("raw_file", raw_file);
+      params.append("avatar_file", crop_file);
       this.$http
-        .post("/user/upload-avatar", params)
+        .patch("/users/current_user", params)
         .then(response => {
           this.loading = false;
           this.$message.success("更换头像成功");

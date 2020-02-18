@@ -2,13 +2,13 @@
   <div>
     <div v-for="friend in friendData" v-if="friendData.length !== 0">
       <el-card :body-style="{ padding: '0px', height: '60px' }" shadow="hover">
-        <img :src="friend.info.who_avatar" class="avatar" />
+        <img :src="friend.send_user.avatar_thumb" class="avatar" />
         <div class="friend-content">
-          <router-link :to="'/people/' + friend.info.who_name"
-            >{{ friend.info.who_name }}&nbsp;&nbsp;</router-link
+          <router-link :to="'/people/'+friend.send_user.username "
+            >{{ friend.send_user.username}}&nbsp;&nbsp;</router-link
           >
           <span>关注了你</span>
-          <span class="time">{{ friend.time }}</span>
+          <span class="time">{{ friend.when.replace('T', ' ')}}</span>
         </div>
       </el-card>
       <br />
@@ -37,12 +37,17 @@ export default {
       this.$http
         .get(url)
         .then(response => {
-          this.friendData = this.friendData.concat(response.data.items);
-          this.next = response.data.next;
+          this.friendData = this.friendData.concat(response.data.data.items);
+          this.next = response.data.data.next;
+          console.log('zxcv')
+          console.log(this.friendData)
+
         })
         .catch(error => {
           console.log("fetch friend data error.");
         });
+        console.log('heww')
+        console.log(this.friendData)
     }
   },
   created() {

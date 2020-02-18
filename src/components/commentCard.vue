@@ -5,7 +5,7 @@
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
         <div class="comment-head">
           <a>
-            <img :src="rating.useravatar" class="image avatar" />
+            <img :src="rating.user_avatar" class="image avatar" />
           </a>
           <router-link :to="'/people/' + rating.username">
             <span class="name">{{ rating.username }}</span>
@@ -19,25 +19,25 @@
             disabled
             text-color="#ff9900"
           ></el-rate>
-          <span class="time rating-time">{{ rating.time }}</span>
+          <span class="time rating-time">{{ rating.when.replace('T',' ') }}</span>
           <a class="report" @click="ratingAction(index, 'report')">
             <i class="material-icons">error_outline</i>
           </a>
           <a
             class="like like-status"
-            v-if="rating.me2rating === 'like'"
+            v-if="rating.me_like_rating === true"
             @click="ratingAction(index, 'unlike')"
           >
             <i class="material-icons">favorite</i>
-            <span class="like-count">{{ rating.likecount }}</span>
+            <span class="like-count">{{ rating.like_count }}</span>
           </a>
           <a
             class="like unlike-status"
-            v-if="rating.me2rating === 'unlike'"
+            v-if="rating.me_like_rating === false"
             @click="ratingAction(index, 'like')"
           >
             <i class="material-icons">favorite</i>
-            <span class="like-count">{{ rating.likecount }}</span>
+            <span class="like-count">{{ rating.like_count }}</span>
           </a>
         </div>
         <div style="padding: 14px;">
@@ -70,20 +70,20 @@ export default {
     ratingAction(index, typename) {
       var url = "/rating/" + this.comments[index].id;
       var params = new URLSearchParams();
-      params.append("typename", typename);
+      params.append("cate", typename);
       this.$http
         .post(url, params)
         .then(response => {
           this.showMessage(response.data.message, "success");
           if (typename !== "report") {
             var comment = this.comments[index];
-            comment.me2rating = typename;
-
             if (typename === "like") {
-              comment.likecount = comment.likecount + 1;
+              comment.me_like_rating = true
+              comment.like_count = comment.like_count + 1;
               this.$set(this.comments, index, comment);
             } else if (typename === "unlike") {
-              comment.likecount = comment.likecount - 1;
+              comment.me_like_rating = false
+              comment.like_count = comment.like_count - 1;
               this.$set(this.comments, index, comment);
             }
           }

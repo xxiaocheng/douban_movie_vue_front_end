@@ -22,7 +22,7 @@
           <el-radio-button label="all">全部类型</el-radio-button>
           <el-radio-button
             v-for="tag in tags"
-            :label="tag.name"
+            :label="tag.genre_name"
           ></el-radio-button>
         </el-radio-group>
       </div>
@@ -36,7 +36,7 @@
           <el-radio-button label="all">全部地区</el-radio-button>
           <el-radio-button
             v-for="country in countries"
-            :label="country"
+            :label="country.country_name"
           ></el-radio-button>
         </el-radio-group>
       </div>
@@ -92,6 +92,7 @@ export default {
       this.params.type_name = this.getValue(this.tagRadio);
       this.params.country = this.getValue(this.countryRadio);
       this.params.year = this.getValue(this.yearRadio);
+      console.log(this.params)
       this.fetchMovies();
     },
     getValue(val) {
@@ -99,9 +100,9 @@ export default {
     },
     fetchTags() {
       this.$http
-        .get("/tags")
+        .get("/genre")
         .then(response => {
-          this.tags = response.data.items;
+          this.tags = response.data.data;
         })
         .catch(error => {
           console.log("fetch tags error.");
@@ -111,7 +112,7 @@ export default {
       this.$http
         .get("/country")
         .then(response => {
-          this.countries = response.data.items;
+          this.countries = response.data.data;
         })
         .catch(error => {
           console.log("fetch country error.");
@@ -121,7 +122,7 @@ export default {
       this.$http
         .get("/year")
         .then(response => {
-          this.years = response.data.items;
+          this.years = response.data.data;
         })
         .catch(error => {
           console.log("fetch year error.");
@@ -129,12 +130,12 @@ export default {
     },
     fetchMovies() {
       this.$http
-        .get("/movie/choices", {
+        .get("/movie/choice", {
           params: this.params
         })
         .then(response => {
-          this.movieItems = response.data.items;
-          this.nextPage = response.data.next;
+          this.movieItems = response.data.data.items;
+          this.nextPage = response.data.data.next;
           this.loading = false;
         })
         .catch(error => {

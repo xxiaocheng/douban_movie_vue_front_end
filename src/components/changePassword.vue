@@ -10,6 +10,7 @@
     >
       <el-form-item label="旧密码" prop="oldPass">
         <el-input
+          type="password"
           v-model="changePassForm.oldPass"
           autocomplete="off"
         ></el-input>
@@ -99,11 +100,10 @@ export default {
     },
     modifyPass() {
       const params = new URLSearchParams();
-      params.append("oldpassword", this.changePassForm.oldPass);
-      params.append("newpassword", this.changePassForm.pass);
-      params.append("newpassword2", this.changePassForm.checkPass);
+      params.append("old_password", this.changePassForm.oldPass);
+      params.append("new_password", this.changePassForm.pass);
       this.$http
-        .post("/auth/change-password", params)
+        .patch("/user/password", params)
         .then(response => {
           this.$message.success(response.data.message);
         })

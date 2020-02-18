@@ -12,8 +12,8 @@
       </el-form-item>
       <el-form-item label="影人性别" prop="gender">
         <el-select v-model="celebrityForm.gender" placeholder="请选择性别">
-          <el-option label="男" value="女"></el-option>
-          <el-option label="女" value="男"></el-option>
+          <el-option label="男" value="male"></el-option>
+          <el-option label="女" value="female"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="豆瓣ID" prop="douban_id">
@@ -28,13 +28,13 @@
       <el-form-item label="又名" prop="aka">
         <el-input
           v-model="celebrityForm.aka"
-          placeholder="多个又名以空格分割"
+          placeholder="多个又名以'/'分割"
         ></el-input>
       </el-form-item>
       <el-form-item label="外文名" prop="aka_en">
         <el-input
           v-model="celebrityForm.aka_en"
-          placeholder="多个外文名以空格分割"
+          placeholder="多个外文名以'/'分割"
         ></el-input>
       </el-form-item>
       <el-form-item label="头像" prop="avatar">
@@ -128,7 +128,7 @@ export default {
     uploadCelebrity() {
       this.loading = true;
       var params = new FormData();
-      params.append("avatar", this.celebrityForm.avatar.raw);
+      params.append("image", this.celebrityForm.avatar.raw);
       params.append("name", this.celebrityForm.name);
       params.append("douban_id", this.celebrityForm.douban_id);
       params.append("gender", this.celebrityForm.gender);

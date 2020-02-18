@@ -75,11 +75,11 @@ export default {
         .get(url)
         .then(response => {
           if (coming_or_showing === "showing") {
-            this.showing.items = response.data.items;
-            this.showing.next = response.data.next;
+            this.showing.items = response.data.data.items;
+            this.showing.next = response.data.data.next;
           } else {
-            this.coming.items = response.data.items;
-            this.coming.next = response.data.next;
+            this.coming.items = response.data.data.items;
+            this.coming.next = response.data.data.next;
           }
           this.loading = false;
         })

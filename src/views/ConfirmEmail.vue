@@ -8,7 +8,7 @@ export default {
     const params = new URLSearchParams();
     params.append("token", token);
     this.$http
-      .post("/account/confirm-email", params)
+      .post("/user/email/token/confirm-email", params)
       .then(response => {
         this.showSucceedMess(response.data.message);
         this.$router.push("/login");

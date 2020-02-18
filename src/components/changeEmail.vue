@@ -19,12 +19,12 @@ export default {
   methods: {
     _changeEmail() {
       this.$http
-        .post("/auth/change-email")
+        .put("/user/email")
         .then(response => {
           this.$message.success(response.data.message);
         })
         .catch(error => {
-          this.$message.error(error.response.data.message);
+          this.$message.error(error.response.data.message+'，请 '+error.response.data.second+" 秒后重试！");
         });
     },
     changeEmail() {
@@ -40,7 +40,7 @@ export default {
     },
     fetchEmail() {
       this.$http
-        .get("/user")
+        .get("/users")
         .then(response => {
           this.currentEmail = response.data.email;
         })

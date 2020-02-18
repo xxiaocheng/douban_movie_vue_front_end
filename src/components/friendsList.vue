@@ -3,13 +3,13 @@
     <div class="card" v-for="user in friendsItems" v-if="friendsItems">
       <el-card shadow="hover" :body-style="{ padding: '0px' }">
         <div class="avatar">
-          <router-link :to="getProfileUrl(user.name)">
-            <img :src="user.avatar" />
+          <router-link :to="getProfileUrl(user.username)">
+            <img :src="user.avatar_image" />
           </router-link>
         </div>
         <div class="content">
-          <router-link :to="getProfileUrl(user.name)">
-            <span class="username">{{ user.name }}</span>
+          <router-link :to="getProfileUrl(user.username)">
+            <span class="username">{{ user.username }}</span>
           </router-link>
           <br />
           <div class="signature">

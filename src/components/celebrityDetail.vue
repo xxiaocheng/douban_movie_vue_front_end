@@ -9,11 +9,11 @@
           <div class="actor-list">
             <div class="subject">
               <div class="mainpic">
-                <img class="movieImg" :src="celebrityInfo.image" alt />
+                <img class="movieImg" :src="celebrityInfo.avatar_url" alt />
               </div>
               <div class="info">
-                <span class="p1" v-if="celebrityInfo.gender">性别:</span>
-                <span class="attrs">{{ celebrityInfo.gender }}</span>
+                <span class="p1" v-if="celebrityInfo.gender === 0">性别: 男</span>
+                <span class="p1" v-if="celebrityInfo.gender === 1">性别: 女</span>
                 <br v-if="celebrityInfo.gender" />
                 <span class="p1" v-if="celebrityInfo.born_place">出生地:</span>
                 <span class="attrs">{{ celebrityInfo.born_place }}</span>
@@ -21,23 +21,14 @@
                 <span class="p1" v-if="celebrityInfo.name_en">英文名:</span>
                 <span class="attrs">{{ celebrityInfo.name_en }}</span>
                 <br v-if="celebrityInfo.name_en" />
-                <span
-                  class="p1"
-                  v-if="JSON.stringify(celebrityInfo.aka_en) !== '[]'"
-                  >更多外文名:</span
-                >
-                <span v-for="name in celebrityInfo.aka_en" class="attrs"
-                  >{{ name }}/</span
-                >
-                <br v-if="JSON.stringify(celebrityInfo.aka_en) !== '[]'" />
-                <span
-                  class="p1"
-                  v-if="JSON.stringify(celebrityInfo.aka) !== '[]'"
-                  >更多中文名:</span
-                >
-                <span v-for="name in celebrityInfo.aka" class="attrs"
-                  >{{ name }}/</span
-                >
+
+                <span class="p1" v-if="JSON.stringify(celebrityInfo.aka_en_list) !== '[]'">更多外文名:</span>
+                <span v-for="name in celebrityInfo.aka_en_list" class="attrs">{{ name }} /</span>
+
+                <br v-if="JSON.stringify(celebrityInfo.aka_list) !== '[]'" />
+                <span class="p1" v-if="JSON.stringify(celebrityInfo.aka_list) !== '[]'">更多中文名:</span>
+                <span v-for="name in celebrityInfo.aka_list" class="attrs">{{ name }} /</span>
+
                 <br v-if="JSON.stringify(celebrityInfo.aka) !== '[]'" />
                 <span class="p1" v-if="celebrityInfo.douban_id">豆瓣链接:</span>
                 <span>
@@ -47,8 +38,7 @@
                         celebrityInfo.douban_id
                     "
                     target="_blank"
-                    >{{ celebrityInfo.douban_id }}</a
-                  >
+                  >{{ celebrityInfo.douban_id }}</a>
                 </span>
                 <br v-if="celebrityInfo.douban_id" />
               </div>
@@ -58,24 +48,20 @@
                 type="danger"
                 @click="deleteCelebrityConfirm"
                 v-if="this.$store.state.role !== 'user'"
-                >删除该影人</el-button
-              >
+              >删除该影人</el-button>
             </div>
           </div>
         </div>
       </div>
       <el-tabs type="card" v-model="activeName">
         <el-tab-pane label="ta导演的" name="direct">
-          <movieList
-            :movies="celebrityInfo.direct_movies"
-            v-loading="loadingInfo"
-          ></movieList>
+          <movieList :movies="direct_movies" v-loading="loadingInfo"></movieList>
+           <hr />
+          <div class="load-more" v-if="directNext" v-on:click="loadMoreD">加载更多</div>
         </el-tab-pane>
         <el-tab-pane label="ta参演的" name="cast">
-          <movieList
-            :movies="celebrityInfo.casts_movies"
-            v-loading="loadingInfo"
-          ></movieList>
+          <movieList :movies="casts_movies" v-loading="loadingInfo"></movieList>
+           <hr /><div class="load-more" v-if="castNext" v-on:click="loadMoreC">加载更多</div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -92,15 +78,44 @@ export default {
   data() {
     return {
       celebrityInfo: this.celeInfo,
-      activeName: "direct"
+      activeName: "direct",
+      direct_movies:[],
+      casts_movies:[],
+      directNext:'',
+      castNext:''
     };
   },
   watch: {
     celeInfo(a, b) {
       this.celebrityInfo = a;
+    },
+    celebrityInfo(a,b){
+      this.celebrityId = a.id;
+      this.fetchCelebrityMovies('director');
+      this.fetchCelebrityMovies('celebrity')
     }
   },
   methods: {
+    fetchCelebrityMovies(cate) {
+      var url = "/celebrity/" + this.celebrityId + "/movie";
+      this.$http
+      .get(url,{
+        params:{
+          cate:cate
+        }
+      }).then(response => {
+        if (cate ==='director'){
+          this.direct_movies=response.data.data.items
+          this.directNext = response.data.data.next
+        }else{
+          this.casts_movies=response.data.data.items
+          this.castNext = response.data.data.next
+        }
+          this.loading = false;
+        }).catch(error => {
+          this.loading = false;
+        })
+    },
     deleteCelebrityConfirm() {
       this.$confirm("此操作将永久该影人, 是否继续?", "提示", {
         confirmButtonText: "确定",

@@ -6,13 +6,13 @@
           <div class="subject">
             <div class="mainpic">
               <a>
-                <img :src="peopleInfo.avatar" />
+                <img :src="peopleInfo.avatar_image" />
               </a>
             </div>
             <h1>
-              <span class="username title">{{ peopleInfo.name }}</span>
+              <span class="username title">{{ peopleInfo.username }}</span>
             </h1>
-            <p class="signature">{{ signature }}</p>
+            <p class="signature">{{ peopleInfo.signature }}</p>
           </div>
           <div class="location" v-if="location">
             <i class="material-icons loc-img">location_on</i>
@@ -27,28 +27,27 @@
               >({{ peopleInfo.followings_count }})</router-link
             >
             <br />
-            <a
-              @click="follow"
-              v-if="!followHe && loginUser !== peopleInfo.name"
+            <a @click="follow"
+              v-if="!followHe && loginUser !== peopleInfo.username"
             >
               <button>关注</button>
             </a>
-            <a @click="unfollow" v-if="followHe">
+            <a @click="unfollow" v-if="followHe && loginUser !== peopleInfo.username">
               <button>取消关注</button>
             </a>
           </div>
           <div class="role-set">
             <el-select
-              v-model="currentRole.role_id"
+              v-model="currentRole"
               placeholder="请选择"
-              v-if="this.$store.state.role === 'administrator'"
+              v-if="this.$store.state.role === 'Administrator'"
               class="role-options"
             >
               <el-option
                 v-for="role in roles"
-                :key="role.role_id"
-                :label="role.role_name"
-                :value="role.role_id"
+                :key="role"
+                :label="role"
+                :value="role"
               ></el-option>
             </el-select>
             <el-button size="medium" @click="setRole()" class="set-role-button"
@@ -125,7 +124,7 @@ export default {
       wishCount: 0,
       codeToText: CodeToText,
       location: "",
-      currentRole: {},
+      currentRole: '',
       roles: []
     };
   },
@@ -139,7 +138,8 @@ export default {
       this.fetchMovie("collect");
       this.fetchMovie("wish");
       this.fetchMovie("do");
-      if (this.$store.state.role === "administrator") {
+      console.log(this.$store.state.role)
+      if (this.$store.state.role === "Administrator") {
         this.getCurrentRole();
         this.getAllRole();
       }
@@ -148,9 +148,9 @@ export default {
   methods: {
     getCurrentRole() {
       this.$http
-        .get("/user/" + this.username + "/role")
+        .get("/users/" + this.username + "/role")
         .then(response => {
-          this.currentRole = response.data;
+          this.currentRole = response.data.role_name;
         })
         .catch(error => {
           console.log("get current role error");
@@ -158,9 +158,9 @@ export default {
     },
     getAllRole() {
       this.$http
-        .get("/roles")
+        .get("/role")
         .then(response => {
-          this.roles = response.data.roles;
+          this.roles = response.data.data.roles;
         })
         .catch(error => {
           console.log("get all role info error");
@@ -168,9 +168,9 @@ export default {
     },
     setRole() {
       const params = new URLSearchParams();
-      params.append("role_id", this.currentRole.role_id);
+      params.append("role_name", this.currentRole);
       this.$http
-        .post("/user/" + this.username + "/role", params)
+        .put("/users/" + this.username + "/role", params)
         .then(response => {
           this.$message.success("设置用户权限成功");
         })
@@ -207,7 +207,7 @@ export default {
     fetchMovie(cate = "-1", url = "-1") {
       // 两个参数每次只需要传入一个,第一次访问传入 cate  ,加载更多时传入 url 即可 .
       if (url === "-1") {
-        url = "/user/" + this.username + "/movie";
+        url = "/users/" + this.username + "/movie";
         var param = {
           type_name: cate
         };
@@ -224,29 +224,28 @@ export default {
         })
         .then(response => {
           if (cate === "wish") {
-            this.wishNext = response.data.next;
-            this.wishMovies = this.wishMovies.concat(response.data.items);
-            this.wishCount = response.data.count;
+            this.wishNext = response.data.data.next;
+            this.wishMovies = this.wishMovies.concat(response.data.data.items);
+            this.wishCount = response.data.data.total;
           } else if (cate === "do") {
-            this.doNext = respose.data.next;
-            this.doMovies = this.doMovies.concat(response.data.items);
-            this.doCount = response.data.count;
+            this.doNext = response.data.data.next;
+            this.doMovies = this.doMovies.concat(response.data.data.items);
+            this.doCount = response.data.data.total;
           } else if (cate === "collect") {
-            this.collectNext = response.data.next;
-            this.collectMovies = this.collectMovies.concat(response.data.items);
-            this.collectCount = response.data.count;
+            this.collectNext = response.data.data.next;
+            this.collectMovies = this.collectMovies.concat(response.data.data.items);
+            this.collectCount = response.data.data.total;
           }
         })
         .catch(error => {
           console.log("fetch movie error.");
+            console.log(this.collectMovies)
         });
     },
     follow() {
-      var follow_url = "/users/follow";
-      const params = new URLSearchParams();
-      params.append("username", this.username);
+      var follow_url = "/users/"+this.username+"/follow";
       this.$http
-        .post(follow_url, params)
+        .post(follow_url)
         .then(response => {
           this.followHe = true;
           this.followers = this.followers + 1;
@@ -257,11 +256,10 @@ export default {
         });
     },
     unfollow() {
-      var follow_url = "/users/unfollow";
+      var follow_url = "/users/"+this.username+"/unfollow";
       const params = new URLSearchParams();
-      params.append("username", this.username);
       this.$http
-        .post(follow_url, params)
+        .delete(follow_url)
         .then(response => {
           this.followHe = false;
           this.followers = this.followers - 1;
@@ -279,19 +277,19 @@ export default {
       });
     },
     fetchUserInfo() {
-      var people_frofile_url = "/user/" + this.$route.params.username;
+      var people_frofile_url = "/users/" + this.$route.params.username;
       this.$http
         .get(people_frofile_url)
         .then(response => {
-          this.peopleInfo = response.data;
-          if (response.data.loc_name) {
-            this.location = this.codeToLocal(response.data.loc_name);
+          this.peopleInfo = response.data.data;
+          if (response.data.data.city_name) {
+            this.location = response.data.data.city_name;
           }
           this.followHe = response.data.follow;
-          this.followers = response.data.followers_count;
+          this.followers = response.data.data.followers_count;
           console.log(response.data.followers_count);
           console.log(this.followers);
-          this.signature = response.data.signature;
+          this.signature = response.data.data.signature;
           this.loadingUserInfo = false;
         })
         .catch(error => {
@@ -304,22 +302,14 @@ export default {
           this.error = true;
         });
     },
-    codeToLocal(code) {
-      var a = code.split(".")[0];
-      var b = code.split(".")[1];
-      if (b == "undefined") {
-        return this.codeToText[a];
-      } else {
-        return this.codeToText[b];
-      }
-    }
+    
   },
   created() {
     this.fetchUserInfo();
     this.fetchMovie("collect");
     this.fetchMovie("wish");
     this.fetchMovie("do");
-    if (this.$store.state.role === "administrator") {
+    if (this.$store.state.role === "Administrator") {
       this.getCurrentRole();
       this.getAllRole();
     }

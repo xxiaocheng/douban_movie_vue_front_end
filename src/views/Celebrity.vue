@@ -30,7 +30,7 @@ export default {
       this.$http
         .get(url)
         .then(response => {
-          this.info = response.data;
+          this.info = response.data.data;
           this.loading = false;
         })
         .catch(error => {

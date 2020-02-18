@@ -181,7 +181,7 @@ export default {
       this.$http
         .get("/notification/new_count")
         .then(response => {
-          this.$store.commit("changeMessageCount", response.data.count);
+          this.$store.commit("changeMessageCount", response.data.data.count);
           setTimeout(() => {
             if (this.$store.state.isLogin) {
               this.getMessageCount();
@@ -200,33 +200,35 @@ export default {
         .get("/search", {
           params: {
             cate: this.queryCate,
-            q: queryString
+            q: queryString,
+            page:1,
+            per_page:50
           }
         })
         .then(response => {
           let suggestions = [];
           if (this.queryCate === "movie") {
-            for (var i = 0; i < response.data.items.length; i++) {
+            for (var i = 0; i < response.data.data.items.length; i++) {
               suggestions.push({
-                value: response.data.items[i].title,
-                id: response.data.items[i].id,
-                image: response.data.items[i].image
+                value: response.data.data.items[i].title,
+                id: response.data.data.items[i].id,
+                image: response.data.data.items[i].image_url
               });
             }
           } else if (this.queryCate === "celebrity") {
-            for (var i = 0; i < response.data.items.length; i++) {
+            for (var i = 0; i < response.data.data.items.length; i++) {
               suggestions.push({
-                value: response.data.items[i].name,
-                id: response.data.items[i].id,
-                image: response.data.items[i].image
+                value: response.data.data.items[i].name,
+                id: response.data.data.items[i].id,
+                image: response.data.data.items[i].avatar_url
               });
             }
           } else {
-            for (var i = 0; i < response.data.items.length; i++) {
+            for (var i = 0; i < response.data.data.items.length; i++) {
               suggestions.push({
-                value: response.data.items[i].name,
-                id: response.data.items[i].id,
-                image: response.data.items[i].avatar
+                value: response.data.data.items[i].username,
+                id: response.data.data.items[i].username,
+                image: response.data.data.items[i].avatar_image
               });
             }
           }

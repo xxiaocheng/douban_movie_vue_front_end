@@ -11,9 +11,9 @@
         <el-tab-pane label="新的关注" name="friends">
           <friendNotification></friendNotification>
         </el-tab-pane>
-        <el-tab-pane label="系统消息" name="system">
+        <!-- <el-tab-pane label="系统消息" name="system">
           <systemNotification></systemNotification>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
@@ -22,10 +22,10 @@
 <script>
 import likeNotification from "@/components/likeNotification.vue";
 import friendNotification from "@/components/friendNotification.vue";
-import systemNotification from "@/components/systemNotification.vue";
+// import systemNotification from "@/components/systemNotification.vue";
 
 export default {
-  components: { likeNotification, friendNotification, systemNotification },
+  components: { likeNotification, friendNotification },
   data() {
     return {
       activeName: "like"

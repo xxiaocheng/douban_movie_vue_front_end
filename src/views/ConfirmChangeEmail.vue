@@ -39,17 +39,16 @@ export default {
         return callback(new Error("邮箱不符合要求"));
       }
       this.$http
-        .get("/user/validate", {
+        .get("/user/test/email", {
           params: {
-            type_name: "email",
             value: value
           }
         })
         .then(response => {
-          callback();
+          callback(new Error("邮箱已占用!"));
         })
         .catch(error => {
-          callback(new Error("邮箱已占用!"));
+          callback();
         });
     };
     return {
@@ -70,10 +69,10 @@ export default {
         if (valid) {
           const params = new URLSearchParams();
           var token = this.$route.query.token;
-          params.append("newemail", this.confirmChangeEmail.email);
+          params.append("new_email", this.confirmChangeEmail.email);
           params.append("token", token);
           this.$http
-            .post("/account/change-email", params)
+            .post("/user/email/token/change-email", params)
             .then(response => {
               this.showSucceedMess(response.data.message);
             })

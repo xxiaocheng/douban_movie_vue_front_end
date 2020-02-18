@@ -59,17 +59,16 @@ export default {
         return callback(new Error("用户名不符合要求"));
       }
       this.$http
-        .get("/user/validate", {
+        .get("/user/test/username", {
           params: {
-            type_name: "username",
             value: value
           }
         })
         .then(response => {
-          callback(new Error("用户不存在"));
+          callback();
         })
         .catch(error => {
-          callback();
+          callback(new Error("用户不存在"));
         });
     };
     var validatePass = (rule, value, callback) => {
@@ -122,7 +121,7 @@ export default {
       params.append("username", username);
       params.append("password", pass);
       this.$http
-        .post("/oauth/token", params)
+        .post("/token", params)
         .then(response => {
           this.showSucceedMess(this.loginForm.username);
           this.$store.commit("changeLogin", true);

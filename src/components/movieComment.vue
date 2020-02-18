@@ -35,17 +35,17 @@ export default {
       ratingCount: 0,
       ratingCate: "",
       nextPage: "",
-      loading: true
+      loading: false
     };
   },
   watch: {
     movieId: function(a, b) {
       this.thisMovieId = a;
-      this.fetchRating("hot", 1);
+      this.fetchRating("new", 1);
     }
   },
   mounted() {
-    this.fetchRating("hot", 1);
+    this.fetchRating("new", 1);
   },
   methods: {
     newRating() {
@@ -65,8 +65,8 @@ export default {
       }
       if (this.thisMovieId) {
         if (page > 0) {
-          var curr_url = "/movie/" + this.thisMovieId + "/rating/all";
-          url = curr_url;
+          var curr_url = "/movie/" + this.thisMovieId + "/rating";
+          url = curr_url; 
         }
         this.$http
           .get(url, {
@@ -76,9 +76,9 @@ export default {
             }
           })
           .then(response => {
-            this.ratingCount = response.data.count;
-            this.ratings = this.ratings.concat(response.data.items);
-            this.nextPage = response.data.next;
+            this.ratingCount = response.data.data.total;
+            this.ratings = this.ratings.concat(response.data.data.items);
+            this.nextPage = response.data.data.next;
             this.loading = false;
           })
           .catch(error => {

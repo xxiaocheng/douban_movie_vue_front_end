@@ -32,8 +32,8 @@ export default {
       this.$http
         .get(url)
         .then(response => {
-          this.movieItems = response.data.items;
-          this.nextPage = response.data.next;
+          this.movieItems = response.data.data.items;
+          this.nextPage = response.data.data.next;
           this.loading = false;
         })
         .catch(error => {

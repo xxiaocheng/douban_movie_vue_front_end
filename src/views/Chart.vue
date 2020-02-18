@@ -16,10 +16,10 @@
     <el-dialog title="选择标签" :visible.sync="dialogVisible">
       <el-tag
         type="success"
-        @click="choiceTag(tag.name)"
+        @click="choiceTag(tag)"
         v-for="tag in tags"
         v-if="tags"
-        >{{ tag.name }}&nbsp;&nbsp;&nbsp;&nbsp;</el-tag
+        >{{ tag.genre_name }}&nbsp;&nbsp;&nbsp;&nbsp;</el-tag
       >
     </el-dialog>
   </div>
@@ -49,23 +49,23 @@ export default {
     };
   },
   mounted() {
-    this.getMovie("/movie/leaderboard/week");
+    this.getMovie("/movie/leader-board/week");
     this.fetchTags();
   },
   methods: {
-    choiceTag(tagName) {
-      console.log(tagName);
-      this.currentTag = tagName;
+    choiceTag(genre) {
+      console.log(genre.id);
+      this.currentTag = genre.genre_name;
       this.dialogVisible = false;
-      this.tagTitle = "豆瓣电影分类排行榜 - " + tagName + "片";
-      var url = "/movie/typerank?type_name=" + tagName;
+      this.tagTitle = "豆瓣电影分类排行榜 - " + genre.genre_name + "片";
+      var url = "/movie/genre/" + genre.id;
       this.getMovie(url);
     },
     fetchTags() {
       this.$http
-        .get("/tags")
+        .get("/genre")
         .then(response => {
-          this.tags = response.data.items;
+          this.tags = response.data.data;
         })
         .catch(error => {
           console.log("fetch tags error.");
@@ -77,10 +77,10 @@ export default {
       this.otherTitle = t;
       this.tagTitle = "";
       if (this.currentRange === "week") {
-        this.getMovie("/movie/leaderboard/month");
+        this.getMovie("/movie/leader-board/month");
         this.currentRange = "month";
       } else {
-        this.getMovie("/movie/leaderboard/week");
+        this.getMovie("/movie/leader-board/week");
         this.currentRange = "week";
       }
     },
@@ -92,8 +92,8 @@ export default {
       this.$http
         .get(url)
         .then(response => {
-          this.movieItems = response.data.items;
-          this.nextPage = response.data.next;
+          this.movieItems = response.data.data.items;
+          this.nextPage = response.data.data.next;
           this.loading = false;
         })
         .catch(error => {

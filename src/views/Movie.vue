@@ -32,8 +32,14 @@ export default {
       this.$http
         .get(url)
         .then(response => {
-          this.movieInfo = response.data;
-          this.me2movie = response.data.me2movie;
+          this.movieInfo = response.data.data;
+          this.me2movie = response.data.data.me_to_movie;
+            console.log(this.me2movie)
+
+          // if (response.data.data.me_to_movie){
+          //   this.me2movie = response.data.data.me_to_movie;
+          //   console.log("---"+this.me2movie)
+          // }
         })
         .catch(error => {
           this.$message.error("未找到相关信息");

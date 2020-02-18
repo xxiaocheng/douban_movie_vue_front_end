@@ -85,7 +85,7 @@ export default {
           params.append("password", this.resetPasswordForm.pass);
           params.append("token", token);
           this.$http
-            .post("/account/reset-password", params)
+            .post("/user/email/token/reset-password", params)
             .then(response => {
               this.showSucceedMess(response.data.message);
               this.$router.push("/login");

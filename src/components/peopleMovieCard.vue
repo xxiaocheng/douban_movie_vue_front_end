@@ -3,7 +3,7 @@
     <div class="movie" v-for="movie in movies" v-if="movies">
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
         <router-link :to="'/movie/' + movie.movie.id">
-          <img :src="movie.movie.image" class="image" />
+          <img :src="movie.movie.image_url" class="image" />
           <div class="content">
             <span class="movie-title">{{ movie.movie.title }}</span>
             <span class="movie-year">{{ movie.movie.year }}</span>
@@ -25,7 +25,7 @@
               <small>{{ movie.comment }}</small>
             </span>
             <br />
-            <small class="time">{{ movie.time }}</small>
+            <small class="time">{{ movie.when.replace('T',' ') }}</small>
           </div>
         </router-link>
       </el-card>

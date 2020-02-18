@@ -8,17 +8,17 @@
       >
         <el-card shadow="hover" :body-style="{ padding: '0px' }">
           <div class="user">
-            <router-link :to="'/people/' + feed.user.name">
-              <img :src="feed.user.avatar" class="avatar" />
+            <router-link :to="'/people/' + feed.username">
+              <img :src="feed.user_avatar" class="avatar" />
             </router-link>
             <div class="user-title">
-              <router-link :to="'/people/' + feed.user.name">
-                <span>{{ feed.user.name }}</span> </router-link
+              <router-link :to="'/people/' + feed.username">
+                <span>{{ feed.username }}</span> </router-link
               >&nbsp;
-              <span v-if="feed.cate === 0" style="color:#888">想看</span>
-              <span v-if="feed.cate === 1" style="color:#888">在看</span>
-              <span v-if="feed.cate === 2" style="color:#888">看过</span>
-              <span class="feed-time">{{ feed.time }}</span>
+              <span v-if="feed.category === 0" style="color:#888">想看</span>
+              <span v-if="feed.category === 1" style="color:#888">在看</span>
+              <span v-if="feed.category === 2" style="color:#888">看过</span>
+              <span class="feed-time">{{ feed.when.replace('T', ' ') }}</span>
               <el-rate
                 v-model="feed.score / 2"
                 disabled
@@ -45,7 +45,7 @@
 
             <div class="movie-img">
               <router-link :to="'/movie/' + feed.movie.id">
-                <img :src="feed.movie.image" />
+                <img :src="feed.movie.image_url" />
               </router-link>
             </div>
             <span v-if="feed.movie.summary">{{
@@ -60,7 +60,7 @@
               </span>
               <br />
               <span class="p1">主演:</span>
-              <span v-for="item in feed.movie.casts" class="attrs">
+              <span v-for="item in feed.movie.celebrities" class="attrs">
                 <router-link :to="'/celebrity/' + item.id">{{
                   item.name
                 }}</router-link
@@ -69,7 +69,7 @@
               <br />
               <span class="p1">类型:</span>
               <span v-for="item in feed.movie.genres" class="attrs"
-                >{{ item }}/</span
+                >{{ item.genre_name }}/</span
               >
               <br />
             </div>
@@ -98,14 +98,14 @@ export default {
       if (next) {
         var url = next;
       } else {
-        var url = "/feed";
+        var url = "/movie/feed";
       }
       this.loading = true;
       this.$http
         .get(url)
         .then(response => {
-          this.feedData = this.feedData.concat(response.data.items);
-          this.next = response.data.next;
+          this.feedData = this.feedData.concat(response.data.data.items);
+          this.next = response.data.data.next;
           this.loading = false;
         })
         .catch(error => {

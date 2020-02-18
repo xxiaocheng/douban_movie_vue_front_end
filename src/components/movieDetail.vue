@@ -13,7 +13,7 @@
           <div class="actor-list">
             <div class="subject">
               <div class="mainpic">
-                <img class="movieImg" :src="movieDetail.image" alt />
+                <img class="movieImg" :src="movieDetail.image_url" alt />
               </div>
               <div class="info">
                 <span class="p1">导演:</span>
@@ -24,7 +24,7 @@
                 </span>
                 <br />
                 <span class="p1">主演:</span>
-                <span v-for="item in movieDetail.casts" class="attrs">
+                <span v-for="item in movieDetail.celebrities" class="attrs">
                   <router-link :to="'/celebrity/' + item.id">{{
                     item.name
                   }}</router-link
@@ -33,20 +33,20 @@
                 <br />
                 <span class="p1">类型:</span>
                 <span v-for="item in movieDetail.genres" class="attrs"
-                  >{{ item }}/</span
+                  >{{ item.genre_name }}/</span
                 >
                 <br />
                 <span class="p1">制片国家/地区:</span>
                 <span
                   v-for="(item, index) in movieDetail.countries"
                   class="attrs"
-                  >{{ item }}</span
+                  >{{ item.country_name }}/</span
                 >
                 <br />
                 <span class="p1">又名:</span>
-                <span v-for="item in movieDetail.aka" class="attrs">{{
+                <span v-for="item in movieDetail.aka_list" class="attrs">{{
                   item
-                }}</span>
+                }} </span>
                 <br />
                 <span class="p1" v-if="movieDetail.seasons_count">总季数:</span>
                 <span v-if="movieDetail.seasons_count">{{
@@ -103,7 +103,7 @@
             </div>
           </div>
           <div class="insterest-people">
-            <div class="top" v-if="me2movie.cate === -1">
+            <div class="top" v-if="me2movie ===null">
               <a @click="wishRating()">
                 <button>想看</button>
               </a>
@@ -124,7 +124,7 @@
                 ></el-rate>
               </span>
             </div>
-            <div class="top" v-if="me2movie.cate !== -1">
+            <div class="top" v-if="me2movie !== null">
               <span class="stitle" v-if="me2movie.cate === 2">
                 我
                 <small>{{ me2movie.time }}</small> 看过
@@ -151,7 +151,7 @@
               <br />
               <span v-if="JSON.stringify(me2movie.tags) !== '[]'">
                 标签:
-                <small v-for="tag in me2movie.tags">{{ tag + " " }}</small>
+                <small v-for='tag in me2movie.tags'>{{ tag + " " }}</small>
               </span>
               <br />
               <span v-if="me2movie.comment">
@@ -163,7 +163,7 @@
           <div class="gtleft"></div>
           <div class="summary">
             <p class="summary-title">
-              {{ movieDetail.title }}的剧情简介 · · · · · ·
+              {{ movieDetail.title }} 的剧情简介 · · · · · ·
             </p>
             <p class="intro">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
@@ -262,15 +262,15 @@ export default {
     },
     wishRating() {
       this.showRating();
-      this.typeName = "wish";
+      this.typeName = 0;
     },
     doRating() {
       this.showRating();
-      this.typeName = "do";
+      this.typeName = 1;
     },
     collectRating() {
       this.showRating();
-      this.typeName = "collect";
+      this.typeName = 2;
     },
     showRating() {
       this.ratingFormVisible = true;
@@ -283,7 +283,7 @@ export default {
       params.append("tags", this.tags);
       params.append("comment", this.comment);
       this.$http
-        .post("/movie/" + movieId + "/interest", params)
+        .post("/movie/" + movieId + "/rating", params)
         .then(response => {
           this.showSucceedMess("评价成功!");
           this.$router.go(0);
@@ -314,7 +314,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          var id = this.me2movie.ratingId;
+          var id = this.me2movie.id;
           var url = "/rating/" + id;
           this.$http
             .delete(url)

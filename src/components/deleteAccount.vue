@@ -54,7 +54,7 @@ export default {
       const params = new URLSearchParams();
       params.append("password", this.password);
       this.$http
-        .delete("/user", {
+        .delete("/users/current_user", {
           data: params,
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })

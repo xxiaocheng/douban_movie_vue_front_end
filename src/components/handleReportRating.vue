@@ -2,7 +2,7 @@
   <div v-loading="loading">
     <div class="movie" v-for="(rating, index) in ratings" v-if="ratings">
       <el-card :body-style="{ padding: '0px' }" shadow="hover">
-        <img :src="rating.movie.image" class="image" />
+        <img :src="rating.movie.image_url" class="image" />
         <div class="content">
           <span class="movie-title">{{ rating.movie.title }}</span>
           <span class="movie-year">{{ rating.movie.year }}</span>
@@ -24,7 +24,7 @@
             <small>{{ rating.comment }}</small>
           </span>
           <br />
-          <small class="time">{{ rating.time }}</small>
+          <small class="time">{{ rating.when.replace('T',' ') }}</small>
         </div>
         <div>
           <el-button
@@ -76,13 +76,13 @@ export default {
       if (next) {
         var url = next;
       } else {
-        var url = "/rating/report";
+        var url = "/rating/reported";
       }
       this.$http
         .get(url)
         .then(response => {
-          this.ratings = this.ratings.concat(response.data.items);
-          this.next = response.data.next;
+          this.ratings = this.ratings.concat(response.data.data.items);
+          this.next = response.data.data.next;
           this.loading = false;
         })
         .catch(error => {

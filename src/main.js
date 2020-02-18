@@ -8,7 +8,7 @@ import "bulma/css/bulma.css";
 import "material-design-icons/iconfont/material-icons.css";
 import VueCropper from "vue-cropper";
 
-axios.defaults.baseURL = "http://localhost:5000/api/v1";
+axios.defaults.baseURL = "http://localhost:5000/api/v2";
 //axios.defaults.timeout = 10000;
 // const token = localStorage.getItem("token");
 const token = store.state.token;

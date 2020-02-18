@@ -5,7 +5,7 @@
         <ul>
           <li class="film-pic">
             <router-link v-bind:to="'/movie/' + movie.id">
-              <img class="movieImg" v-bind:src="movie.image" alt />
+              <img class="movieImg" v-bind:src="movie.image_url" alt />
             </router-link>
           </li>
           <li class="film-name">

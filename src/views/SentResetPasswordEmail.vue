@@ -42,17 +42,16 @@ export default {
         return callback(new Error("邮箱不符合要求"));
       }
       this.$http
-        .get("/user/validate", {
+        .get("/user/test/email", {
           params: {
-            type_name: "email",
             value: value
           }
         })
         .then(response => {
-          callback(new Error("邮箱不存在!"));
+          callback();
         })
         .catch(error => {
-          callback();
+          callback(new Error("邮箱不存在!"));
         });
     };
     return {
@@ -74,12 +73,12 @@ export default {
           const params = new URLSearchParams();
           params.append("email", this.resetPasswordEmailForm.email);
           this.$http
-            .post("/auth/reset-password", params)
+            .put("/user/password", params)
             .then(response => {
               this.showSucceedMess(response.data.message);
             })
             .catch(error => {
-              this.showFailedMess(error.response.data.message);
+              this.showFailedMess("请 "+ error.response.data.second+" 秒后再重试！");
             });
         } else {
           console.log("error submit");

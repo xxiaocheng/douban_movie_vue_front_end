@@ -21,7 +21,7 @@
       <el-form-item label="长居地" prop="location">
         <el-cascader
           size="large"
-          :options="options"
+          :options="areaData"
           v-model="profileForm.location"
           @change="handleChange"
         ></el-cascader>
@@ -50,21 +50,20 @@ export default {
         return callback(new Error("用户名不符合要求"));
       }
       this.$http
-        .get("/user/validate", {
+        .get("/user/test/username", {
           params: {
-            type_name: "username",
             value: value
           }
         })
         .then(response => {
-          callback();
-        })
-        .catch(error => {
           if (value === this.currentUsername) {
             callback();
           } else {
             callback(new Error("用户名已存在"));
           }
+        })
+        .catch(error => {
+            callback();
         });
     };
     var validateSignature = (rule, value, callback) => {
@@ -75,6 +74,7 @@ export default {
       }
     };
     return {
+      areaData:[],
       profileForm: {
         username: "",
         signature: "",
@@ -85,7 +85,7 @@ export default {
         signature: [{ validator: validateSignature, trigger: "blur" }]
       },
       currentUsername: "",
-      options: provinceAndCityData
+      options: provinceAndCityData,
     };
   },
   methods: {
@@ -106,13 +106,22 @@ export default {
         }
       });
     },
+    getAreaData(){
+      this.$http.get('/area-code')
+      .then(response=>{
+        this.areaData = response.data;
+      })
+      .catch(error=>{
+        console.log('get area data error.')
+      })
+    },
     fillFormDefault() {
       var currentUsername = this.$store.state.username;
       this.currentUsername = currentUsername;
       this.$http
-        .get("/user")
+        .get("/users")
         .then(response => {
-          this.profileForm.username = response.data.name;
+          this.profileForm.username = response.data.username;
           this.profileForm.signature = response.data.signature;
           //   this.profileForm.location = response.data.loc_name;
         })
@@ -124,11 +133,10 @@ export default {
       const params = new URLSearchParams();
       params.append("username", this.profileForm.username);
       params.append("signature", this.profileForm.signature);
-      var location =
-        this.profileForm.location[0] + "." + this.profileForm.location[1];
-      params.append("location", location);
+      params.append("city_id", this.profileForm.location[2]);
+      console.log(this.profileForm.location[2])
       this.$http
-        .patch("/user", params)
+        .patch("/users/"+this.currentUsername, params)
         .then(response => {
           this.$message.success("修改成功!");
         })
@@ -139,6 +147,7 @@ export default {
   },
   created() {
     this.fillFormDefault();
+    this.getAreaData();
   }
 };
 </script>
