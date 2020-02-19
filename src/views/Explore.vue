@@ -89,8 +89,8 @@ export default {
   methods: {
     changeChoice() {
       this.params.subtype = this.getValue(this.subtypeRadio);
-      this.params.type_name = this.getValue(this.tagRadio);
-      this.params.country = this.getValue(this.countryRadio);
+      this.params.genre_name = this.getValue(this.tagRadio);
+      this.params.country_name = this.getValue(this.countryRadio);
       this.params.year = this.getValue(this.yearRadio);
       console.log(this.params)
       this.fetchMovies();

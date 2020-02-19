@@ -1,5 +1,5 @@
 <template>
-  <div class="moviesList" v-loading="loading">
+  <div class="moviesList" v-loading="loading" element-loading-text="拼命加载中">
     <div class="movie-container">
       <div class="movieTag" v-for="movie in moviesItems">
         <ul>
@@ -54,8 +54,8 @@ export default {
       this.$http
         .get(this.next)
         .then(response => {
-          this.moviesItems = this.moviesItems.concat(response.data.items);
-          this.next = response.data.next;
+          this.moviesItems = this.moviesItems.concat(response.data.data.items);
+          this.next = response.data.data.next;
           this.loading = false;
           // this.$store.commit('setMovieItems',this.$store.state.movieItems.concat(response.data.items));
           // this.$store.commit('setNextMovie',response.data.next);
