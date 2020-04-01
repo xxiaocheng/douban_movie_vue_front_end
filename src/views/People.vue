@@ -36,11 +36,10 @@
               <button>取消关注</button>
             </a>
           </div>
-          <div class="role-set">
+          <div class="role-set" v-if="this.$store.state.role === 'Administrator'">
             <el-select
               v-model="currentRole"
               placeholder="请选择"
-              v-if="this.$store.state.role === 'Administrator'"
               class="role-options"
             >
               <el-option

@@ -57,7 +57,7 @@
             class="navbar-item"
             to="/admin"
             v-if="
-              this.$store.state.isLogin && this.$store.state.role !== 'user'
+              this.$store.state.isLogin && this.$store.state.role !== 'User'
             "
           >
             <i class="material-icons">build</i>
@@ -173,7 +173,7 @@ export default {
   },
   computed: {
     profileUrl: function() {
-      return "/people/" + this.username;
+      return "/people/" +this.$store.state.username;
     }
   },
   methods: {
