@@ -20,7 +20,7 @@
                 <span v-for="item in movieDetail.directors" class="attrs">
                   <router-link :to="'/celebrity/' + item.id">{{
                     item.name
-                  }}</router-link>
+                  }}</router-link>/
                 </span>
                 <br />
                 <span class="p1">主演:</span>
@@ -100,6 +100,15 @@
                 v-if="this.$store.state.role !== 'user'"
                 >删除这个电影</el-button
               >
+            </div>
+            <div>
+              <router-link :to="'/movie/'+this.movieDetail.id+'/update'">
+              <el-button
+                type="warning"
+                v-if="this.$store.state.role !== 'user'"
+                >修改电影信息</el-button
+              >
+              </router-link>
             </div>
           </div>
           <div class="insterest-people">

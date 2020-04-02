@@ -19,6 +19,7 @@ import Explore from "./views/Explore.vue";
 import Settings from "./views/Settings.vue";
 import Notification from "./views/Notification.vue";
 import Admin from "./views/Admin.vue";
+import UpdateMovie from "./views/UpdateMovie.vue";
 
 Vue.use(Router);
 
@@ -123,6 +124,15 @@ export default new Router({
       component: Movie,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: "/movie/:movieid/update",
+      name: "updateMovie",
+      component: UpdateMovie,
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
       }
     },
     {
