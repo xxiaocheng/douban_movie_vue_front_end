@@ -137,7 +137,7 @@
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('movieForm')" v-loading="loading">立即创建</el-button>
+        <el-button type="primary" @click="submitForm('movieForm')" v-loading="loading">修改电影信息</el-button>
         <el-button @click="resetForm('movieForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -183,10 +183,10 @@ export default {
           { required: true, message: "请输入国家信息", trigger: "blur" }
         ],
         genres: [{ required: true, message: "请输入标签", trigger: "blur" }],
-        directors: [
-          { required: true, message: "请选择导演", trigger: "change" }
-        ],
-        casts: [{ required: true, message: "请选择演员", trigger: "change" }]
+        // directors: [
+        //   { required: true, message: "请选择导演", trigger: "change" }
+        // ],
+        // casts: [{ required: true, message: "请选择演员", trigger: "change" }]
       }
     };
   },

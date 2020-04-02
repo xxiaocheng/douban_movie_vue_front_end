@@ -159,7 +159,7 @@ export default {
     },
     showFailedMess(message) {
       this.$message({
-        howClose: true,
+        showClose: true,
         message: message,
         type: "error"
       });

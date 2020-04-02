@@ -20,6 +20,7 @@ import Settings from "./views/Settings.vue";
 import Notification from "./views/Notification.vue";
 import Admin from "./views/Admin.vue";
 import UpdateMovie from "./views/UpdateMovie.vue";
+import UpdateCelebrity from "./views/UpdateCelebrity.vue"
 
 Vue.use(Router);
 
@@ -94,6 +95,15 @@ export default new Router({
       component: Celebrity,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: "/celebrity/:celebrityid/update",
+      name: "updateCelebrity",
+      component: UpdateCelebrity,
+      meta: {
+        requiresAuth: true,
+        requiresAdmin: true
       }
     },
     {

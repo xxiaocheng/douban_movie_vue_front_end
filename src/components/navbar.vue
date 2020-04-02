@@ -9,7 +9,7 @@
         <!-- 导航栏左边的选项,总是可见,通常包含logo或者一些其他链接-->
         <router-link to="/" class="navbar-item">
           <!--logo pic -->
-          <img src="../assets/douban_movie.png" width="112" height="28" />
+          <img src="../assets/baikan-movie-3.png" width="112" height="28" />
         </router-link>
         <a
           role="button"

@@ -14,7 +14,7 @@
               <div class="info">
                 <span class="p1" v-if="celebrityInfo.gender === 0">性别: 男</span>
                 <span class="p1" v-if="celebrityInfo.gender === 1">性别: 女</span>
-                <br v-if="celebrityInfo.gender" />
+                <br v-if="celebrityInfo.gender!==null" />
                 <span class="p1" v-if="celebrityInfo.born_place">出生地:</span>
                 <span class="attrs">{{ celebrityInfo.born_place }}</span>
                 <br v-if="celebrityInfo.born_place" />
@@ -48,7 +48,16 @@
                 type="danger"
                 @click="deleteCelebrityConfirm"
                 v-if="this.$store.state.role !== 'user'"
-              >删除该影人</el-button>
+              >删除这个影人</el-button>
+            </div>
+            <div>
+              <router-link :to="'/celebrity/'+this.celebrityInfo.id+'/update'">
+              <el-button
+                type="warning"
+                v-if="this.$store.state.role !== 'User'"
+                >修改影人信息</el-button
+              >
+              </router-link>
             </div>
           </div>
         </div>

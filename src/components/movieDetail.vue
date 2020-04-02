@@ -97,7 +97,7 @@
               <el-button
                 type="danger"
                 @click="deleteMovieConfirm"
-                v-if="this.$store.state.role !== 'user'"
+                v-if="this.$store.state.role !== 'User'"
                 >删除这个电影</el-button
               >
             </div>
@@ -105,7 +105,7 @@
               <router-link :to="'/movie/'+this.movieDetail.id+'/update'">
               <el-button
                 type="warning"
-                v-if="this.$store.state.role !== 'user'"
+                v-if="this.$store.state.role !== 'User'"
                 >修改电影信息</el-button
               >
               </router-link>
